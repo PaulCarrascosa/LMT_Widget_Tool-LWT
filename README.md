@@ -13,7 +13,9 @@ First of all, you will need to download the folder which contains all of the fil
 ## Installation
 ### Python
 
-To make the tool work, you will need a specific version of Python. Download the 3.10 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install 'Windows installer (32-bit)' or 'Windows installer (64-bit)' (depending of your system). Then execute the downloaded file. During the installation, make sure to check the box "Add python.exe to PATH" and follow the process until Python is installed.
+To make the tool work, you will need a specific version of Python. Download the 3.10 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install 'Windows installer (32-bit)' or 'Windows installer (64-bit)' (depending of your system) and execute the downloaded file. 
+
+During the installation, make sure to check the box "Add python.exe to PATH" and follow the process until Python is installed.
 
 ### Jupyter Lab
 
@@ -38,6 +40,12 @@ After the installation, open the folder .../scripts in Jupter Lab and open the f
 ```bash
 LMT_Widget_Tool.ipynb
 ```
+First, you will have to execute the first cell code to install the packages for the tool. Once all the packages are installed, close JupyterLab and close the Kernel by pressing the keys "Ctrl + C" inside of your prompt. Then restart JupyterLab in your prompt using :
+
+```bash
+jupyter lab
+```
+
 Here you can enjoy the analysis !
 
 ## Contributing
