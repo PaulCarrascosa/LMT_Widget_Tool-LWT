@@ -22,6 +22,16 @@ Once you have installed Python, open your command prompt. Here, put the followin
 ```bash
 pip install jupyterlab==3.5.0
 ```
+
+### Packages for tool
+
+Install this list with the command:
+
+```bash
+pip install -r requirements.txt
+```
+## Launch Jupyter Lab
+
 Each time you want to launch Jupyter Lab, you will have to open you command prompt and use the following command :
 
 ```bash
