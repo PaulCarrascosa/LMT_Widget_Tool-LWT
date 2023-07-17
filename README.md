@@ -48,6 +48,16 @@ jupyter lab
 
 Here you can enjoy the analysis !
 
+## Order for analysis
+
+### Rebuild databases and convert into csv files
+
+![alt_rebuil_plus_export](https://github.com/PaulCarrascosa/Docs/blob/main/images/Rebuild_plus_export.jpg)
+The first part will rebuild the databases by deleting the data and rebuild them using the detections and export these data into csv files.
+
+![alt_only_export](https://github.com/PaulCarrascosa/Docs/blob/main/images/Only_export.jpg)
+The second part is usefull if you want to convert your data into csv using different timebins. So this part is not the 
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
@@ -57,4 +67,9 @@ Please make sure to update tests as appropriate.
 
 ## License
 
+LMT_Widget_Tool is released under the GNU GPL v3.0 licence. See the [LICENSE](LICENSE) file.
+
+Copyright (C) 2023 IGF - CNRS - INSERM - Université de Montpellier
+
+LMT_Widget_Tool uses the LMT-analysis code provided on [GitHub](https://github.com/fdechaumont/lmt-analysis). This code is also under the GNU GPL v3.0 licence.
 [GNU GPL ?](https://choosealicense.com/licenses/mit/)
