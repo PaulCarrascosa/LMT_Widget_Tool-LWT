@@ -27,10 +27,6 @@ pip install jupyterlab==3.5.0
 
 ### Python Requirements (See [requirements.txt](requirements.txt))
 
-First, in your command prompt, you need to change your directory path to install these packages. You have to copy the path of the downloaded folder into ...\LMT_Widget_Tool-LWT-main and put in your command prompt :
-```bash
-cd <paste the path here>
-```
 - lxml==4.9.1
 - affine==2.3.1
 - networkx==2.8.5
@@ -42,7 +38,12 @@ cd <paste the path here>
 - tabulate==0.8.10
 - ipywidgets==8.0.3
 
-Install this list in your command prompt with the command:
+First, in your command prompt, you need to change your directory path to install these packages. You have to copy the path of the downloaded folder into ...\LMT_Widget_Tool-LWT-main and put in your command prompt :
+```bash
+cd <paste the path here>
+```
+
+Then, to install this list in your command prompt, do it with the command:
 ```bash
 pip install -r requirements.txt
 ```
