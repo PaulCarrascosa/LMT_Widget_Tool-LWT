@@ -38,9 +38,9 @@ pip install jupyterlab==3.5.0
 - tabulate==0.8.10
 - ipywidgets==8.0.3
 
-First, in your command prompt, you need to change your directory path to install these packages. You have to copy the path of the downloaded folder into '...\LMT_Widget_Tool-LWT-main' and put in your command prompt :
+First, in your command prompt, you need to change your directory path to install these packages. You have to copy the path of the downloaded folder into '...\LMT_Widget_Tool-LWT-main' and paste the path you just copied in your command prompt :
 ```bash
-cd <paste the path here>
+cd paste\your\path\here
 ```
 
 Then, to install this list in your command prompt, do it with the command:
@@ -63,7 +63,7 @@ After the installation, open the folder '...\LMT_Widget_Tool-LWT-main\scripts' i
 ```bash
 LMT_Widget_Tool.ipynb
 ```
-First, you will have to execute the first cell code to install the packages for the tool. Once all the packages are installed, close JupyterLab and close the Kernel by pressing the keys "Ctrl + C" inside of your prompt. Then restart JupyterLab in your prompt using :
+First, you will have to execute the first cell code to install the packages for the tool. Once all the packages are installed, close JupyterLab and close the Kernel by pressing the keys "Ctrl + C" inside of your command prompt. Then restart JupyterLab in your command prompt using :
 
 ```bash
 jupyter lab
