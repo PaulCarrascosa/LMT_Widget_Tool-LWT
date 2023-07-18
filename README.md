@@ -27,7 +27,6 @@ pip install jupyterlab==3.5.0
 
 ### Python Requirements (See [requirements.txt](requirements.txt))
 
-
 - lxml==4.9.1
 - affine==2.3.1
 - networkx==2.8.5
@@ -39,7 +38,7 @@ pip install jupyterlab==3.5.0
 - tabulate==0.8.10
 - ipywidgets==8.0.3
 
-First, in your command prompt, you need to change your directory path to install these packages. You have to copy the path of the downloaded folder into ...\LMT_Widget_Tool-LWT-main and put in your command prompt :
+First, in your command prompt, you need to change your directory path to install these packages. You have to copy the path of the downloaded folder into '...\LMT_Widget_Tool-LWT-main' and put in your command prompt :
 ```bash
 cd <paste the path here>
 ```
@@ -59,7 +58,7 @@ jupyter lab
 
 ## Launch the tool
 
-After the installation, open the folder .../scripts in Jupter Lab and open the file :
+After the installation, open the folder '...\LMT_Widget_Tool-LWT-main\scripts' in Jupter Lab and open the file :
 
 ```bash
 LMT_Widget_Tool.ipynb
