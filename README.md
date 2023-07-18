@@ -15,7 +15,7 @@ First of all, you will need to download the folder which contains all of the fil
 
 To make the tool work, you will need a specific version of Python. Download the 3.10 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install 'Windows installer (32-bit)' or 'Windows installer (64-bit)' (depending of your system) and execute the downloaded file. 
 
-During the installation, make sure to check the box "Add python.exe to PATH" and follow the process until Python is installed.
+## :warning: During the installation, make sure to check the box "Add python.exe to PATH" and click on "Install now" until Python is installed.
 
 ### Jupyter Lab
 
@@ -63,6 +63,10 @@ After the installation, open the folder '...\LMT_Widget_Tool-LWT-main\scripts' i
 ```bash
 LMT_Widget_Tool.ipynb
 ```
+
+Before using the tool, make sure to restart the kernel to clear it. Then you can launch it. Sometimes you will need it, but don’t do it when it’s running !
+
+
 First, you will have to execute the first cell code to install the packages for the tool. Once all the packages are installed, close JupyterLab and close the Kernel by pressing the keys "Ctrl + C" inside of your command prompt. Then restart JupyterLab in your command prompt using :
 
 ```bash
