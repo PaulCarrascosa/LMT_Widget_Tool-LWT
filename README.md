@@ -79,11 +79,14 @@ Here you can enjoy the analysis !
 
 ### Rebuild databases and convert into csv files
 
-![alt_rebuil_plus_export](https://github.com/PaulCarrascosa/Docs/blob/main/images/Rebuild_plus_export.jpg)
+![alt_rebuil_plus_export](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Rebuild_plus_export.jpg)
 The first part will rebuild the databases by deleting the data and rebuild them using the detections and export these data into csv files.
 
-![alt_only_export](https://github.com/PaulCarrascosa/Docs/blob/main/images/Only_export.jpg)
+![alt_only_export](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Only_export.jpg)
 The second part is usefull if you want to convert your data into csv using different timebins. So this part is not the 
+
+![alt_merge](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Merge.jpg)
+The third part will merge the csv files created into one csv file which will be used by the tool for the analysis.
 
 ## Contributing
 
