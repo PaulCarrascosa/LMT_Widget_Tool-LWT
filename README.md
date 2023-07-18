@@ -27,6 +27,10 @@ pip install jupyterlab==3.5.0
 
 ### Python Requirements (See [requirements.txt](requirements.txt))
 
+First, in your command prompt, you need to change your directory path to install these packages. You have to copy the path of the downloaded folder into ...\LMT_Widget_Tool-LWT-main and put in your command prompt :
+```bash
+cd <paste the path here>
+```
 - lxml==4.9.1
 - affine==2.3.1
 - networkx==2.8.5
