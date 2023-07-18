@@ -6,18 +6,18 @@ You will find more information about LMT on its [website](https://livemousetrack
 
 In our tool, we use the LMT-Analysis v1.0.5 with few changes in files for our tool to work.
 
-## Download
+## 1. Download
 
 First of all, you will need to download the folder which contains all of the files to run the tool.
 
-## Installation
-### Python
+## 2. Installation
+### 2.1. Python
 
 To make the tool work, you will need a specific version of Python. Download the 3.10 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install 'Windows installer (32-bit)' or 'Windows installer (64-bit)' (depending of your system) and execute the downloaded file. 
 
 ## :warning: During the installation, make sure to check the box "Add python.exe to PATH" and click on "Install now" until Python is installed.
 
-### Jupyter Lab
+### 2.2. Jupyter Lab
 
 Once you have installed Python, open your command prompt. Here, put the following command :
 
@@ -25,7 +25,7 @@ Once you have installed Python, open your command prompt. Here, put the followin
 pip install jupyterlab==3.5.0
 ```
 
-### Python Requirements (See [requirements.txt](requirements.txt))
+### 2.3. Python Requirements (See [requirements.txt](requirements.txt))
 
 - lxml==4.9.1
 - affine==2.3.1
@@ -38,7 +38,7 @@ pip install jupyterlab==3.5.0
 - tabulate==0.8.10
 - ipywidgets==8.0.3
 
-First, in your command prompt, you need to change your directory path to install these packages. You have to copy the path of the downloaded folder into '...\LMT_Widget_Tool-LWT-main' and paste the path you just copied in your command prompt :
+First, in your command prompt, you need to change your directory path to install these packages. You have to copy the path of the downloaded folder into '...\LMT_Widget_Tool-LWT-main' and paste the path you just copied in your command prompt (yes, there is a space between 'cd' and your path):
 ```bash
 cd paste\your\path\here
 ```
@@ -48,7 +48,7 @@ Then, to install this list in your command prompt, do it with the command:
 pip install -r requirements.txt
 ```
 
-## Launch Jupyter Lab
+## 3. Launch Jupyter Lab
 
 Each time you want to launch Jupyter Lab, you will have to open you command prompt and use the following command :
 
@@ -56,7 +56,7 @@ Each time you want to launch Jupyter Lab, you will have to open you command prom
 jupyter lab
 ```
 
-## Launch the tool
+## 4. Launch the tool
 
 After the installation, open the folder '...\LMT_Widget_Tool-LWT-main\scripts' in Jupter Lab and open the file :
 
