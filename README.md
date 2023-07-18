@@ -58,7 +58,7 @@ jupyter lab
 
 ## 4. Launch the tool
 
-After the installation, open the folder '...\LMT_Widget_Tool-LWT-main\scripts' in Jupter Lab and open the file :
+Once Jupyter Lab is launched, open the folder '...\LMT_Widget_Tool-LWT-main\scripts' in Jupter Lab and open the file :
 
 ```bash
 LMT_Widget_Tool.ipynb
