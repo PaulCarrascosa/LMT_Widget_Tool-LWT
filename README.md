@@ -8,14 +8,20 @@ In our tool, we use the LMT-Analysis v1.0.5 with few changes in files for our to
 
 ## 1. Download
 
-First of all, you will need to download the folder which contains all of the files to run the tool.
+First of all, you will need to download the folder which contains all of the files to run the tool:<br><br>
+![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Download.jpg)<br><br>
 
 ## 2. Installation
 ### 2.1. Python
 
-To make the tool work, you will need a specific version of Python. Download the 3.10 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install 'Windows installer (32-bit)' or 'Windows installer (64-bit)' (depending of your system) and execute the downloaded file. 
+To make the tool work, you will need a specific version of Python. Download the 3.10 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install 'Windows installer (32-bit)' or 'Windows installer (64-bit)' (64-bit is recommended).<br><br>
+![alt_python](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Python.jpg)<br><br>
+Then, execute the .exe file you just downloaded.
 
-## :warning: During the installation, make sure to check the box "Add python.exe to PATH" and click on "Install now" until Python is installed.
+## :warning: WARNING<br>
+During the installation, make sure to check the box "Add python.exe to PATH" and click on "Install now" until Python is installed:<br><br>
+![alt_path](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Path.jpg)<br><br>
+
 
 ### 2.2. Jupyter Lab
 
@@ -64,7 +70,11 @@ Once Jupyter Lab is launched, open the folder '...\LMT_Widget_Tool-LWT-main\scri
 LMT_Widget_Tool.ipynb
 ```
 
-Before using the tool, make sure to restart the kernel to clear it. Then you can launch it. Sometimes you will need it, but don’t do it when it’s running !
+## :warning: WARNING
+
+Before using the tool, make sure to restart the kernel to clear it :<br><br>
+![alt_restart_kernel](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Restart_kernel.jpg)<br><br>
+Sometimes you will need to restart the kernel when it seems that the tool crashed, but don’t do it when it’s running !
 
 
 First, you will have to execute the first cell code to install the packages for the tool. Once all the packages are installed, close JupyterLab and close the Kernel by pressing the keys "Ctrl + C" inside of your command prompt. Then restart JupyterLab in your command prompt using :
