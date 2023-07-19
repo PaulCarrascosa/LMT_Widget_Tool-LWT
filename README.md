@@ -25,7 +25,7 @@ During the installation, make sure to check the box "Add python.exe to PATH" and
 
 ### 2.2. Jupyter Lab
 
-Once you have installed Python, open your command prompt. Here, put the following command :
+Once you have installed Python, open your command prompt. To open it, press the keys Windows + S, then type "cmd" and press Enter. Here, put the following command :
 
 ```bash
 pip install jupyterlab==3.5.0
