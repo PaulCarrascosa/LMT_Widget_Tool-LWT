@@ -9,7 +9,7 @@ In our tool, we use the LMT-Analysis v1.0.5 with few changes in files for our to
 ## 1. Download
 
 First of all, you will need to download the folder which contains all of the files to run the tool:<br><br>
-![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Download.jpg)<br><br>
+![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Download.jpg?raw=true)<br><br>
 First of all, move the zipped folder on your desktop. Once it's done, make sure to unzip the zipped folder you just download (download [7-Zip](https://www.7-zip.org/download.html) for free to unzip zipped folders if you don't have it already on your computer).<br>
 To unzip, you have to do a right-click on the folder, then click on "7-Zip" and "Extract here". If you are using a Windows 11 version, do a right-click on the zipped folder, then click on "Show more options", then "7-Zip" and "Extract here". 
 
@@ -17,12 +17,12 @@ To unzip, you have to do a right-click on the folder, then click on "7-Zip" and 
 ### 2.1. Python
 
 To make the tool work, you will need a specific version of Python. Download the 3.10 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install 'Windows installer (64-bit)' (64-bit is recommended but if your computer is on a 32-bit OS you should download the 32-bit version).<br><br>
-![alt_python](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Python.jpg)<br><br>
+![alt_python](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Python.jpg?raw=true)<br><br>
 Then, execute the .exe file you just downloaded.
 
 ## :warning: WARNING<br>
 During the installation, make sure to check the box "Add python.exe to PATH" and click on "Install now" until Python is installed:<br><br>
-![alt_path](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Path.jpg)<br><br>
+![alt_path](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Path.jpg?raw=true)<br><br>
 
 
 ### 2.2. Jupyter Lab
@@ -76,7 +76,7 @@ LMT_Widget_Tool.ipynb
 ## :warning: WARNING
 
 Before using the tool, make sure to restart the kernel to clear it :<br><br>
-![alt_restart_kernel](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Restart_kernel.jpg)<br><br>
+![alt_restart_kernel](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Restart_kernel.jpg?raw=true)<br><br>
 Sometimes you will need to restart the kernel when it seems that the tool crashed, but don’t do it when it’s running !
 
 
@@ -92,14 +92,14 @@ Here you can enjoy the analysis !
 
 ### Rebuild databases and convert into csv files
 
-![alt_rebuil_plus_export](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Rebuild_plus_export.jpg)<br><br>
+![alt_rebuil_plus_export](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Rebuild_plus_export.jpg?raw=true)<br><br>
 The first part will rebuild the databases by deleting the data and rebuild them using the detections and export these data into csv files. It is recommanded to do timebins of 5 or 10 minutes for each bin<br><br>
 
 ### :warning: Warning <br><br>
-![alt_only_export](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Only_export.jpg)<br><br>
+![alt_only_export](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Only_export.jpg?raw=true)<br><br>
 The second part is optional. It is usefull only if you want to convert your data into csv using different timebins. So be careful with this code cell, use it only if you want to change the timebins of your data.
 
-![alt_merge](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Merge.jpg)
+![alt_merge](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Merge.jpg?raw=true)
 The third part will merge the csv files created into one csv file which will be used by the tool for the analysis.
 
 ## Contributing
