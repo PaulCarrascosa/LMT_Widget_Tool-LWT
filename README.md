@@ -10,7 +10,8 @@ In our tool, we use the LMT-Analysis v1.0.5 with few changes in files for our to
 
 First of all, you will need to download the folder which contains all of the files to run the tool:<br><br>
 ![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Download.jpg)<br><br>
-Once it's done, make sure to unzip the zipped folder you just download (download [7-Zip](https://www.7-zip.org/download.html) for free to unzip zipped folders if you don't have it already on your computer). To unzip, you have to do a right-click on the folder, then click on 
+First of all, move the zipped folder on your desktop. Once it's done, make sure to unzip the zipped folder you just download (download [7-Zip](https://www.7-zip.org/download.html) for free to unzip zipped folders if you don't have it already on your computer).<br>
+To unzip, you have to do a right-click on the folder, then click on "7-Zip" and "Extract here". If you are using a Windows 11 version, do a right-click on the zipped folder, then click on "Show more options", then "7-Zip" and "Extract here". 
 
 ## 2. Installation
 ### 2.1. Python
@@ -46,12 +47,12 @@ Here is a visualisation of the packages that will be downloaded later :<br>
 - tabulate==0.8.10
 - ipywidgets==8.0.3
 
-In your command prompt, you need to change your directory path to install these packages. You have to copy the path of the downloaded folder into '...\LMT_Widget_Tool-LWT-main' and paste the path you just copied in your command prompt (yes, there is a space between 'cd' and your copied path):
+In your command prompt, you need to change your directory path to install these packages. To do that, you have to copy the path of the downloaded folder into (e.g. : C:\Users\guest\Desktop\LMT_Widget_Tool-LWT-main) and paste the path you just copied in your command prompt (yes, there is a space between 'cd' and your pasted path):
 ```bash
 cd paste\your\path\here
 ```
 
-Then, to install this list in your command prompt, do it with the command:
+Then, to install all the packages from the previous list in your command prompt, do it with the command:
 ```bash
 pip install -r requirements.txt
 ```
