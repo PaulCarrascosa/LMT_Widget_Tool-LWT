@@ -26,7 +26,7 @@ During the installation, make sure to check the box "Add python.exe to PATH" and
 
 ### 2.2. LWTools
 
-Once you have installed Python, open your command prompt to install the tool. To open the command prompt, press the keys Windows + R, then type "cmd" and press Enter. Here, put the following command :
+Once you have installed Python, open your command prompt to install the tool. To open the command prompt, press the keys Windows + R, then type "cmd" and press Enter. In your command prompt, put the following command :
 
 ```bash
 pip install LWTools
