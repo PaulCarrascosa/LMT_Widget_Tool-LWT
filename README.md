@@ -24,42 +24,17 @@ Then, execute the .exe file you just downloaded.
 During the installation, make sure to check the box "Add python.exe to PATH" and click on "Install now" until Python is installed:<br><br>
 ![alt_path](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Path.jpg?raw=true)<br><br>
 
+### 2.2. LWTools
 
-### 2.2. Jupyter Lab
-
-Once you have installed Python, open your command prompt. To open the command prompt, press the keys Windows + R, then type "cmd" and press Enter. Here, put the following command :
+Once you have installed Python, open your command prompt to install the tool. To open the command prompt, press the keys Windows + R, then type "cmd" and press Enter. Here, put the following command :
 
 ```bash
-pip install jupyterlab==3.5.0
-```
-
-### 2.3. Python Requirements (See [requirements.txt](requirements.txt))
-
-Here is a visualisation of the packages that will be downloaded later :<br>
-- lxml==4.9.1
-- affine==2.3.1
-- networkx==2.8.5
-- matplotlib==3.5.2
-- pandas==1.4.3
-- seaborn==0.11.2
-- dabest==2023.2.14
-- statsmodels==0.13.2
-- tabulate==0.8.10
-- ipywidgets==8.0.3
-
-In your command prompt, you need to change your directory path to install these packages. To do that, you have to copy the path of the downloaded folder into (e.g. : C:\Users\guest\Desktop\LMT_Widget_Tool-LWT-main) and paste the path you just copied in your command prompt (yes, there is a space between 'cd' and your pasted path):
-```bash
-cd paste\your\path\here
-```
-
-Then, to install all the packages from the previous list in your command prompt, do it with the command:
-```bash
-pip install -r requirements.txt
+pip install LWTools
 ```
 
 ## 3. Launch Jupyter Lab
 
-Each time you want to launch Jupyter Lab, you will have to open you command prompt and use the following command :
+Each time you want to launch the tool, you will need to launch Jupyter Lab first. To launch Jupyter Lab, you will have to open you command prompt (if it is not already open) and use the following command :
 
 ```bash
 jupyter lab
@@ -67,7 +42,7 @@ jupyter lab
 
 ## 4. Launch the tool
 
-Once Jupyter Lab is launched, open the folder '...\LMT_Widget_Tool-LWT-main\scripts' in Jupter Lab and open the file :
+Once Jupyter Lab is launched, find the folder you downloaded from Github during the first step and open the folder '...\LMT_Widget_Tool-LWT-main\scripts' in Jupter Lab and open the file :
 
 ```bash
 LMT_Widget_Tool.ipynb
