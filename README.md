@@ -74,8 +74,11 @@ The first part will rebuild the databases by deleting the data and rebuild them 
 ![alt_only_export](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Only_export.jpg?raw=true)<br><br>
 The second part is optional. It is usefull only if you want to convert your data into csv using different timebins. So be careful with this code cell, use it only if you want to change the timebins of your data.
 
-![alt_merge](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Merge.jpg?raw=true)
+![alt_merge](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Merge.jpg?raw=true)<br><br>
 The third part will merge the csv files created into one csv file which will be used by the tool for the analysis.
+
+![alt_tool](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Tool.jpg?raw=true)<br><br>
+The fourth part is to start the tool, you will need to use the merged file that you will have with the third part.
 
 ## Contributing
 
