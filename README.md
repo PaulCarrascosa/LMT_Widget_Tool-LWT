@@ -58,7 +58,7 @@ Here you can enjoy the tool !
 
 ## Order for analysis<br><br>
 
-First, you will have to execute the first cell code to install the packages for the tool.<br><br>
+First, you will have to execute the first cell code to install the packages for the tool. Click on the cell you want to execute and press the keys Ctrl + Enter <br><br>
 
 ### Rebuild databases and convert into csv files
 
