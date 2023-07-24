@@ -54,16 +54,11 @@ Before using the tool, make sure to restart the kernel to clear it :<br><br>
 ![alt_restart_kernel](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Restart_kernel.jpg?raw=true)<br><br>
 Sometimes you will need to restart the kernel when it seems that the tool crashed, but don’t do it when it’s running !
 
+Here you can enjoy the tool !
 
-First, you will have to execute the first cell code to install the packages for the tool. Once all the packages are installed, close JupyterLab and close the Kernel by pressing the keys "Ctrl + C" inside of your command prompt. Then restart JupyterLab in your command prompt using :
+## Order for analysis<br><br>
 
-```bash
-jupyter lab
-```
-
-Here you can enjoy the analysis !
-
-## Order for analysis
+First, you will have to execute the first cell code to install the packages for the tool.<br><br>
 
 ### Rebuild databases and convert into csv files
 
