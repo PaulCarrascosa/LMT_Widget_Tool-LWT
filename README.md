@@ -10,7 +10,7 @@ In our tool, we use the LMT-Analysis v1.0.5 with few changes in files for our to
 
 First of all, you will need to download the folder which contains all of the files to run the tool:<br><br>
 ![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Download.jpg?raw=true)<br><br>
-First of all, move the zipped folder on your desktop. Once it's done, make sure to unzip the zipped folder you just download (download 7-Zip for free [here](https://www.7-zip.org/download.html) to unzip zipped folders if you don't have it already on your computer).<br>
+First of all, move the zipped folder on your desktop. Once it's done, make sure to unzip the zipped folder you just download (download 7-Zip for free [here](https://www.7-zip.org/download.html) to unzip zipped folders if you don't have it already installed on your computer).<br>
 To unzip, you have to do a right-click on the folder, then click on "7-Zip" and "Extract here". If you are using a Windows 11 version, do a right-click on the zipped folder, then click on "Show more options", then "7-Zip" and "Extract here". 
 
 ## 2. Installation
