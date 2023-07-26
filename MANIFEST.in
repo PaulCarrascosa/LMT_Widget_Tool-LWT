@@ -1,0 +1,2 @@
+# This is for the .ipynb files, to make them appear
+global-include LWT\scripts\*.ipynb

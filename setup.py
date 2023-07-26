@@ -7,16 +7,14 @@ You should have received a copy of the GNU General Public License along with thi
 For license issues, please contact:
 
 Paul Carrascosa
-Institut de Génomique Fonctionnelle
+Institut de Genomique Fonctionnelle
 141 Rue de la Cardonille
 34000, Montpellier
 
 Email: paul.carrascosa@igf.cnrs.fr or damien.huzard@igf.cnrs.fr
 '''
 
-
-
-from setuptools import setup,find_packages
+from setuptools import setup, find_packages
 import pathlib
 import os
 
@@ -29,35 +27,37 @@ except Exception:
     long_description=''
 
 
-setup(name='LMT_Widget_Tool',version='1.0.0',author='Paul Carrascosa, Damien Huzard',
+setup(name='LWTools',version='1.0.3',author='Paul Carrascosa, Damien Huzard',
     author_email='paul.carrascosa@igf.cnrs.fr',
     description='Tool for LMT data analysis',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT',
-    platform='any',
     packages=find_packages(),
+    include_package_data=True,
     package_data={
-        '':['*.txt','*.png','*.pb','*.jpg','*.csv','*.index','*.data-00000-of-00001']
+        'LWTools':['*.py''*.ipynb','*.txt','*.png','*.pb','*.jpg','*.csv','*.index','*.data-00000-of-00001']
     },
     license='GNU General Public License v3 (GPLv3)',
     classifiers=[
-    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.10',
     'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
     'Operating System :: OS Independent',
     ],
-    keywords='LMT, Tool, Data analysis',
+    keywords='Live Mouse Tracker, LMT, Tool, Data analysis',
     python_requires='>=3.10',
     install_requires=[
-    'matplotlib==3.5.2',
-    'lxml==4.9.1',
-    'pandas==1.4.3',
-    'affine==2.3.1',
-    'networkx==2.8.5',
-    'seaborn==0.11.2',
-    'dabest==2023.2.14',
-    'statsmodels==0.13.2',
-    'tabulate==0.8.10',
-    'ipywidgets==8.0.3'
-    ]  
+        'setuptools>=61.0',
+    	'matplotlib==3.5.2',
+    	'lxml==4.9.1',
+    	'pandas==1.4.3',
+    	'affine==2.3.1',
+    	'networkx==2.8.5',
+    	'seaborn==0.11.2',
+    	'dabest==2023.2.14',
+    	'statsmodels==0.13.2',
+    	'tabulate==0.8.10',
+    	'ipywidgets==8.0.3',
+    	'jupyterlab==3.5.0',
+    ]   
 )
