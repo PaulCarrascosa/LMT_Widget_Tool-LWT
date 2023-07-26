@@ -347,9 +347,8 @@ def update_dropdown(date, cage, night_phase, event, range_slide_plot):
     if choicetype.value == 'Number of events':
         for date_val, cage_val, night_phase_val in itertools.product(date, cage, night_phase):
             display(Markdown(
-                f"""<h3>L'analyse est réalisée sur {animalnumber.value[0]} souris, l'injection choisie est '{date_val}', 
-                             il s'agit de la {cage_val} pour l'évènement '{drop_event.value}' durant la phase {night_phase_val}
-                             de nuit !</h3>"""))
+                f"""<h3>The analysis is performed on {animalnumber.value[0]}, the choosen injection is '{date_val}', 
+                for the {cage_val} and for the '{drop_event.value}' event during night phase {night_phase_val} !</h3>"""))
             temp_df_loop0 = df[(df["Injection"] == date_val)
                                & (df["Cage"] == cage_val)
                                & (df["name"] == drop_event.value)
