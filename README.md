@@ -10,13 +10,13 @@ In our tool, we use the LMT-Analysis v1.0.5 with few changes in files for our to
 
 First of all, you will need to download the folder which contains all of the files to run the tool:<br><br>
 ![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Download.jpg?raw=true)<br><br>
-First of all, move the zipped folder on your desktop. Once it's done, make sure to unzip the zipped folder you just download (download [7-Zip](https://www.7-zip.org/download.html) for free to unzip zipped folders if you don't have it already on your computer).<br>
+First of all, move the zipped folder on your desktop. Once it's done, make sure to unzip the zipped folder you just download (download 7-Zip for free [here](https://www.7-zip.org/download.html) to unzip zipped folders if you don't have it already on your computer).<br>
 To unzip, you have to do a right-click on the folder, then click on "7-Zip" and "Extract here". If you are using a Windows 11 version, do a right-click on the zipped folder, then click on "Show more options", then "7-Zip" and "Extract here". 
 
 ## 2. Installation
 ### 2.1. Python
 
-To make the tool work, you will need a specific version of Python. Download the 3.10 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install 'Windows installer (64-bit)' (64-bit is recommended but if your computer is on a 32-bit OS you should download the 32-bit version).<br><br>
+To make the tool work, you will need a specific version of Python. Download the 3.10.11 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install 'Windows installer (64-bit)' (64-bit is recommended but if your computer is on a 32-bit OS you should download the 32-bit version).<br><br>
 ![alt_python](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Python.jpg?raw=true)<br><br>
 Then, execute the .exe file you just downloaded.
 
@@ -42,11 +42,7 @@ jupyter lab
 
 ## 4. Launch the tool
 
-Once Jupyter Lab is launched, find the folder you downloaded from Github during the first step and open the folder '...\LMT_Widget_Tool-LWT-main\scripts' in Jupter Lab and open the file :
-
-```bash
-LMT_Widget_Tool.ipynb
-```
+Once Jupyter Lab is launched, find the folder you downloaded from Github during the first step and open the file '...\LMT_Widget_Tool-LWT-main\scripts\LMT_Widget_Tool-LWT-main\scripts'
 
 ## :warning: WARNING
 
