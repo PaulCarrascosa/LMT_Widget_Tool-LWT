@@ -20,7 +20,7 @@ To make the tool work, you will need a specific version of Python. Download the 
 ![alt_python](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Python.jpg?raw=true)<br><br>
 Then, execute the .exe file you just downloaded.
 
-## :warning: WARNING<br>
+## **! WARNING !**<br>
 During the installation, make sure to check the box "Add python.exe to PATH" and click on "Install now" until Python is installed:<br><br>
 ![alt_path](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Path.jpg?raw=true)<br><br>
 
@@ -44,7 +44,7 @@ jupyter lab
 
 Once Jupyter Lab is launched, find the folder you downloaded from Github during the first step and open the file '...\LMT_Widget_Tool-LWT-main\scripts\LMT_Widget_Tool-LWT-main\scripts'
 
-## :warning: WARNING
+## **! WARNING !**
 
 Before using the tool, make sure to restart the kernel to clear it :<br><br>
 ![alt_restart_kernel](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Restart_kernel.jpg?raw=true)<br><br>
