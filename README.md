@@ -61,7 +61,7 @@ First, you will have to execute the first cell code to install the packages for 
 ![alt_rebuil_plus_export](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Rebuild_plus_export.jpg?raw=true)<br><br>
 The part 1 will rebuild the databases by deleting the data and rebuild them using the detections and export these data into csv files. It is recommanded to do timebins of 5 or 10 minutes for each bin<br><br>
 
-### :warning: Warning for 1.1<br><br>
+### **! WARNING !** for 1.1<br><br>
 ![alt_only_export](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Only_export.jpg?raw=true)<br><br>
 The part 1.1 is optional. It is usefull only if you want to convert your data into csv using different timebins. So be careful with this code cell, use it only if you want to change the timebins of your data.<br><br>
 
