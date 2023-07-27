@@ -16,7 +16,7 @@ To unzip, you have to do a right-click on the folder, then click on "7-Zip" and 
 ## 2. Installation
 ### 2.1. Python
 
-To make the tool work, you will need a specific version of Python. Download the 3.10.11 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install '<code style="color : Red">Windows installer (64-bit)</code>' (64-bit is recommended but if your computer is on a 32-bit OS you should download the 32-bit version).<br><br>
+To make the tool work, you will need a specific version of Python. Download the 3.10.11 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install `Windows installer (64-bit)` (64-bit is recommended but if your computer is on a 32-bit OS you should download the 32-bit version).<br><br>
 ![alt_python](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Python.jpg?raw=true)<br><br>
 Then, execute the .exe file you just downloaded.
 
