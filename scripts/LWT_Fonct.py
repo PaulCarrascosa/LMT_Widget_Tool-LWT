@@ -427,6 +427,7 @@ def update_stats(date, cage, night_phase, event, choice_type, stats_type, range_
     . The third that is the summary of the statsmodels.stats.descriptivestats.describe() function
     '''
     clear_output()
+    new_column_names = []
     dfs = []
     ids = [i for i in df.GenoA.unique()]
     min_value_stats, max_value_stats = range_slide_stats
@@ -479,11 +480,19 @@ def update_stats(date, cage, night_phase, event, choice_type, stats_type, range_
                 pivot_df2.sort_values('new_cage',
                                       inplace=True)
 
-                # Créer les 4 nouvelles colonnes et les remplir avec les valeurs de la 3ème colonne à la dernière colonne
-                pivot_df2['Control'] = pivot_df2.iloc[:, 2::4].sum(axis=1)
-                pivot_df2['Day1'] = pivot_df2.iloc[:, 3::4].sum(axis=1)
-                pivot_df2['Day2'] = pivot_df2.iloc[:, 4::4].sum(axis=1)
-                pivot_df2['Day3'] = pivot_df2.iloc[:, 5::4].sum(axis=1)
+                # Récupérez le nombre de sélections dans le widget
+                num_selections = len(drop_injection_stat.value)
+
+                # Récupérez les valeurs de sélections dans le widget
+                name_selections = list(drop_injection_stat.value)
+
+                # Remplissez les colonnes avec la somme des colonnes existantes à partir de la deuxième colonne
+                for i in range(1, num_selections + 1):
+                    column_name = name_selections[i - 1]
+                    start_column = i + 1  # Commencez à partir de la colonne suivante (index + 1)
+                    step = num_selections  # Utilisez un pas égal au nombre de sélections
+                    pivot_df2[column_name] = pivot_df2.iloc[:, start_column::step].sum(axis=1)
+                    new_column_names.append(column_name)  # Ajoutez le nom de la colonne à la liste
 
                 # création de la colonne avec l'index
                 pivot_df2.reset_index(inplace=True)
@@ -491,21 +500,10 @@ def update_stats(date, cage, night_phase, event, choice_type, stats_type, range_
                 pivot_df2.index.name = 'Index'
                 pivot_df2['Index'] = pivot_df2.index.astype(int)
 
-                if len(drop_injection_stat.value) == 2:
-                    two_groups_paired_baseline = dabest.load(data=pivot_df2,
-                                                             idx=("Control", "Day1"),
-                                                             id_col="Index",
-                                                             paired='baseline')
-                elif len(drop_injection_stat.value) == 3:
-                    two_groups_paired_baseline = dabest.load(data=pivot_df2,
-                                                             idx=("Control", "Day1", "Day2"),
-                                                             id_col="Index",
-                                                             paired='baseline')
-                elif len(drop_injection_stat.value) == 4:
-                    two_groups_paired_baseline = dabest.load(data=pivot_df2,
-                                                             idx=("Control", "Day1", "Day2", "Day3"),
-                                                             id_col="Index",
-                                                             paired='baseline')
+                two_groups_paired_baseline = dabest.load(data=pivot_df2,
+                                                         idx=new_column_names,
+                                                         id_col="Index",
+                                                         paired='baseline')
 
                 fig, axs = plt.subplots(1, 3,
                                         figsize=(30, 12))
@@ -618,11 +616,19 @@ def update_stats(date, cage, night_phase, event, choice_type, stats_type, range_
                 pivot_df2.sort_values('new_cage',
                                       inplace=True)
 
-                # Créer les 4 nouvelles colonnes et les remplir avec les valeurs de la 3ème colonne à la dernière colonne
-                pivot_df2['Control'] = pivot_df2.iloc[:, 2::4].sum(axis=1)
-                pivot_df2['Day1'] = pivot_df2.iloc[:, 3::4].sum(axis=1)
-                pivot_df2['Day2'] = pivot_df2.iloc[:, 4::4].sum(axis=1)
-                pivot_df2['Day3'] = pivot_df2.iloc[:, 5::4].sum(axis=1)
+                # Récupérez le nombre de sélections dans le widget
+                num_selections = len(drop_injection_stat.value)
+
+                # Récupérez les valeurs de sélections dans le widget
+                name_selections = list(drop_injection_stat.value)
+
+                # Remplissez les colonnes avec la somme des colonnes existantes à partir de la deuxième colonne
+                for i in range(1, num_selections + 1):
+                    column_name = name_selections[i - 1]
+                    start_column = i + 1  # Commencez à partir de la colonne suivante (index + 1)
+                    step = num_selections  # Utilisez un pas égal au nombre de sélections
+                    pivot_df2[column_name] = pivot_df2.iloc[:, start_column::step].sum(axis=1)
+                    new_column_names.append(column_name)  # Ajoutez le nom de la colonne à la liste
 
                 # création de la colonne avec l'index
                 pivot_df2.reset_index(inplace=True)
@@ -630,21 +636,10 @@ def update_stats(date, cage, night_phase, event, choice_type, stats_type, range_
                 pivot_df2.index.name = 'Index'
                 pivot_df2['Index'] = pivot_df2.index.astype(int)
 
-                if len(drop_injection_stat.value) == 2:
-                    two_groups_paired_baseline = dabest.load(data=pivot_df2,
-                                                             idx=("Control", "Day1"),
-                                                             id_col="Index",
-                                                             paired='baseline')
-                elif len(drop_injection_stat.value) == 3:
-                    two_groups_paired_baseline = dabest.load(data=pivot_df2,
-                                                             idx=("Control", "Day1", "Day2"),
-                                                             id_col="Index",
-                                                             paired='baseline')
-                elif len(drop_injection_stat.value) == 4:
-                    two_groups_paired_baseline = dabest.load(data=pivot_df2,
-                                                             idx=("Control", "Day1", "Day2", "Day3"),
-                                                             id_col="Index",
-                                                             paired='baseline')
+                two_groups_paired_baseline = dabest.load(data=pivot_df2,
+                                                         idx=new_column_names,
+                                                         id_col="Index",
+                                                         paired='baseline')
 
                 fig, axs = plt.subplots(1, 3,
                                         figsize=(25, 10))
@@ -719,6 +714,7 @@ def results_update_stats(date, cage, night_phase, event, choice_type, stats_type
     '''
     for r_drop_event in drop_event.options:
         clear_output()
+        new_column_names_clk = []
         ids = [i for i in df.GenoA.unique()]
         min_value_stats, max_value_stats = range_slide_stats
         dfs_clk = []
@@ -760,11 +756,19 @@ def results_update_stats(date, cage, night_phase, event, choice_type, stats_type
                 pivot_df_clk.sort_values('new_cage',
                                          inplace=True)
 
-                # Créer les 4 nouvelles colonnes et les remplir avec les valeurs de la 3ème colonne à la dernière colonne
-                pivot_df_clk['Control'] = pivot_df_clk.iloc[:, 2::4].sum(axis=1)
-                pivot_df_clk['Day1'] = pivot_df_clk.iloc[:, 3::4].sum(axis=1)
-                pivot_df_clk['Day2'] = pivot_df_clk.iloc[:, 4::4].sum(axis=1)
-                pivot_df_clk['Day3'] = pivot_df_clk.iloc[:, 5::4].sum(axis=1)
+                # Récupérez le nombre de sélections dans le widget
+                num_selections = len(drop_injection_stat.value)
+
+                # Récupérez les valeurs de sélections dans le widget
+                name_selections = list(drop_injection_stat.value)
+
+                # Remplissez les colonnes avec la somme des colonnes existantes à partir de la deuxième colonne
+                for i in range(1, num_selections + 1):
+                    column_name = name_selections[i - 1]
+                    start_column = i + 1  # Commencez à partir de la colonne suivante (index + 1)
+                    step = num_selections  # Utilisez un pas égal au nombre de sélections
+                    pivot_df_clk[column_name] = pivot_df_clk.iloc[:, start_column::step].sum(axis=1)
+                    new_column_names_clk.append(column_name)  # Ajoutez le nom de la colonne à la liste
 
                 # création de la colonne avec l'index
                 pivot_df_clk.reset_index(inplace=True)
@@ -772,21 +776,10 @@ def results_update_stats(date, cage, night_phase, event, choice_type, stats_type
                 pivot_df_clk.index.name = 'Index'
                 pivot_df_clk['Index'] = pivot_df_clk.index.astype(int)
 
-                if len(drop_injection_stat.value) == 2:
-                    two_groups_paired_baseline_clk = dabest.load(data=pivot_df_clk,
-                                                             idx=("Control", "Day1"),
-                                                             id_col="Index",
-                                                             paired='baseline')
-                elif len(drop_injection_stat.value) == 3:
-                    two_groups_paired_baseline_clk = dabest.load(data=pivot_df_clk,
-                                                             idx=("Control", "Day1", "Day2"),
-                                                             id_col="Index",
-                                                             paired='baseline')
-                elif len(drop_injection_stat.value) == 4:
-                    two_groups_paired_baseline_clk = dabest.load(data=pivot_df_clk,
-                                                             idx=("Control", "Day1", "Day2", "Day3"),
-                                                             id_col="Index",
-                                                             paired='baseline')
+                pivot_df_clk = dabest.load(data=pivot_df_clk,
+                                           idx=new_column_names_clk,
+                                           id_col="Index",
+                                           paired='baseline')
 
                 fig, axs = plt.subplots(1, 3,
                                         figsize=(25, 10))
@@ -888,11 +881,19 @@ def results_update_stats(date, cage, night_phase, event, choice_type, stats_type
                 pivot_df_clk.sort_values('new_cage',
                                          inplace=True)
 
-                # Créer les 4 nouvelles colonnes et les remplir avec les valeurs de la 3ème colonne à la dernière colonne
-                pivot_df_clk['Control'] = pivot_df_clk.iloc[:, 2::4].sum(axis=1)
-                pivot_df_clk['Day1'] = pivot_df_clk.iloc[:, 3::4].sum(axis=1)
-                pivot_df_clk['Day2'] = pivot_df_clk.iloc[:, 4::4].sum(axis=1)
-                pivot_df_clk['Day3'] = pivot_df_clk.iloc[:, 5::4].sum(axis=1)
+                # Récupérez le nombre de sélections dans le widget
+                num_selections = len(drop_injection_stat.value)
+
+                # Récupérez les valeurs de sélections dans le widget
+                name_selections = list(drop_injection_stat.value)
+
+                # Remplissez les colonnes avec la somme des colonnes existantes à partir de la deuxième colonne
+                for i in range(1, num_selections + 1):
+                    column_name = name_selections[i - 1]
+                    start_column = i + 1  # Commencez à partir de la colonne suivante (index + 1)
+                    step = num_selections  # Utilisez un pas égal au nombre de sélections
+                    pivot_df_clk[column_name] = pivot_df_clk.iloc[:, start_column::step].sum(axis=1)
+                    new_column_names_clk.append(column_name)  # Ajoutez le nom de la colonne à la liste
 
                 # création de la colonne avec l'index
                 pivot_df_clk.reset_index(inplace=True)
@@ -900,21 +901,10 @@ def results_update_stats(date, cage, night_phase, event, choice_type, stats_type
                 pivot_df_clk.index.name = 'Index'
                 pivot_df_clk['Index'] = pivot_df_clk.index.astype(int)
 
-                if len(drop_injection_stat.value) == 2:
-                    two_groups_paired_baseline_clk = dabest.load(data=pivot_df_clk,
-                                                             idx=("Control", "Day1"),
-                                                             id_col="Index",
-                                                             paired='baseline')
-                elif len(drop_injection_stat.value) == 3:
-                    two_groups_paired_baseline_clk = dabest.load(data=pivot_df_clk,
-                                                             idx=("Control", "Day1", "Day2"),
-                                                             id_col="Index",
-                                                             paired='baseline')
-                elif len(drop_injection_stat.value) == 4:
-                    two_groups_paired_baseline_clk = dabest.load(data=pivot_df_clk,
-                                                             idx=("Control", "Day1", "Day2", "Day3"),
-                                                             id_col="Index",
-                                                             paired='baseline')
+                pivot_df_clk = dabest.load(data=pivot_df_clk,
+                                           idx=new_column_names_clk,
+                                           id_col="Index",
+                                           paired='baseline')
 
                 fig, axs = plt.subplots(1, 3,
                                         figsize=(25, 10))
