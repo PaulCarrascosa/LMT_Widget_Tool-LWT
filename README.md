@@ -11,7 +11,7 @@ In our tool, we use the LMT-Analysis v1.0.5 with few changes in files for our to
 
 First of all, you will need to download the folder which contains all of the files to run the tool:<br><br>
 ![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Download.jpg?raw=true)<br><br>
-Place the zipped folder in the folder of your choice, unzip it (for example with [7-Zip](https://www.7-zip.org/download.html)).<br>
+Place the ZIP file in the folder of your choice, unzip it (for example with [7-Zip](https://www.7-zip.org/download.html)).<br>
 
 ## 2. Installation
 ### 2.1. Python
