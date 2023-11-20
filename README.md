@@ -1,18 +1,17 @@
 # LMT Widget Tool (LWT)
 
-The LMT Widget Tool is as tool designed to facilitate your extraction and analysis of databases from the Live Mouse Tracker (LMT).
+The LMT Widget Tool is as tool designed to facilitate the extraction and analysis of behavioral data from .sqlite databases from the Live Mouse Tracker (LMT).
 It helps users with no programming experience to easily visualize, analyze and extract relevant analysis.
 
 You will find more information about LMT on its [website](https://livemousetracker.org/) and [publication](https://www.nature.com/articles/s41551-019-0396-1.epdf?shared_access_token=8wpLBUUytAaGAtXL96vwIdRgN0jAjWel9jnR3ZoTv0MWp3GqbF86Gf14i30j-gtSG2ayVLmU-s57ZbhM2WJjw18inKlRYt31Cg_hLJbPCqlKdjWBImyT1OrH5tewfPqUthmWceoct6RVAL_Vt8H-Og%3D%3D).
 
 In our tool, we use the LMT-Analysis v1.0.5 with few changes in files for our tool to work.
 
-## 1. Download
+## 1. Download (and unzipping)
 
 First of all, you will need to download the folder which contains all of the files to run the tool:<br><br>
 ![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Download.jpg?raw=true)<br><br>
-First of all, move the zipped folder on your desktop. Once it's done, make sure to unzip the zipped folder you just download (download 7-Zip for free [here](https://www.7-zip.org/download.html) to unzip zipped folders if you don't have it already installed on your computer).<br>
-To unzip, you have to do a right-click on the folder, then click on "7-Zip" and "Extract here". If you are using a Windows 11 version, do a right-click on the zipped folder, then click on "Show more options", then "7-Zip" and "Extract here". 
+Place the zipped folder in the folder of your choice, unzip it (for example with [7-Zip](https://www.7-zip.org/download.html)).<br>
 
 ## 2. Installation
 ### 2.1. Python
