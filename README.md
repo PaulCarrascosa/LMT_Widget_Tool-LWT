@@ -47,7 +47,7 @@ This will open a Jupyter Lab tab in your favorite web browser. (! Warning ! if y
 
 ## 4. Launching the LWTools notebook
 
-Once Jupyter Lab is launched, go to the folder you downloaded from Github during the step <b>1. Download (and unzipping)</b> and open the <b>scripts</b> folder (e.g. '...\LMT_Widget_Tool-LWT-main\scripts').
+Once Jupyter Lab is launched, go to the folder you downloaded from Github during the step <b> 1. Download (and unzipping) </b> and open the <b> scripts </b> folder (e.g. '...\LMT_Widget_Tool-LWT-main\scripts').
 
 ## **! WARNING !**
 
