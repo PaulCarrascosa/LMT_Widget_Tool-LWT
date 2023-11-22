@@ -84,6 +84,20 @@ to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
+## Future developments
+
+We are also planning to improve and extend to possibilities of this tool, you can also send us your suggestions and feedbacks! <br>
+Here are few ideas of future developments:<br>
+  - More statistical analyses
+  - defining ROI from your LMT cages (defining zones of interest, like food-zone, house, ...)
+  - Graphs of distance
+  - exporting all graphs and stats at once
+
+## Another Cool LMT Tool
+
+If you do not know it yet, please have a look to Nicolas Torquet's own [LMT_toolkit_analysis](https://github.com/ntorquet/lmt_toolkit_analysis)! It is really a powerful way to extract and visualize data from your .sqlite directly. <br>
+It might be still a bit harder to install and run than our tool, but it is a beautiful and inspiring initiative! Try it and let him/us know!
+
 ## License
 
 LMT_Widget_Tool is released under the GNU GPL v3.0 licence. See the [LICENSE](LICENSE) file.
