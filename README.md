@@ -47,7 +47,7 @@ This will open a Jupyter Lab tab in your favorite web browser. (! Warning ! if y
 
 ## 4. Launching the LWTools notebook
 
-Once Jupyter Lab is launched, go to the folder you downloaded from Github during the step <b>1. Download (and unzipping)<b> and open the <b>scripts<b> folder (e.g. '...\LMT_Widget_Tool-LWT-main\scripts').
+Once Jupyter Lab is launched, go to the folder you downloaded from Github during the step <b>1. Download (and unzipping)</b> and open the <b>scripts</b> folder (e.g. '...\LMT_Widget_Tool-LWT-main\scripts').
 
 ## **! WARNING !**
 
@@ -55,7 +55,7 @@ Before using the tool, make sure to restart the kernel to clear it :<br><br>
 ![alt_restart_kernel](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Restart_kernel.jpg?raw=true)<br><br>
 Sometimes you will need to restart the kernel when it seems that the tool crashed, but don’t do it when it’s running !
 
-Then, you can enjoy the tool, by opening the <b>LMT_Widget_Tool.ipynb<b> and running it within Jupyter Lab! (If so far, you never used a jupyter lab before, we recommend trying [that tutorial[(https://jupyter.org/try-jupyter/lab/?path=notebooks%2FIntro.ipynb)).
+Then, you can enjoy the tool, by opening the <b>LMT_Widget_Tool.ipynb</b> and running it within Jupyter Lab! (If so far, you never used a jupyter lab before, we recommend trying [that tutorial[(https://jupyter.org/try-jupyter/lab/?path=notebooks%2FIntro.ipynb)).
 <br><br>
 
 ## Order for analysis<br>
