@@ -5,7 +5,9 @@ It helps users with no programming experience to easily visualize, analyze and e
 
 You will find more information about LMT on its [website](https://livemousetracker.org/) and [publication](https://www.nature.com/articles/s41551-019-0396-1.epdf?shared_access_token=8wpLBUUytAaGAtXL96vwIdRgN0jAjWel9jnR3ZoTv0MWp3GqbF86Gf14i30j-gtSG2ayVLmU-s57ZbhM2WJjw18inKlRYt31Cg_hLJbPCqlKdjWBImyT1OrH5tewfPqUthmWceoct6RVAL_Vt8H-Og%3D%3D).
 
-In our tool, we use the LMT-Analysis v1.0.5 with few changes in files for our tool to work.
+In our tool, we used the [LMT-Analysis](https://github.com/fdechaumont/lmt-analysis) repo v1.0.5, from [Fabrice de Chaumont](https://github.com/fdechaumont) with only few changes for our tool to work.
+
+If you have any questions or comments, feel free to contact us, Damien (damien.huzard@igf.cnrs.fr) or Paul (paul.carrascosa@igf.cnrs.fr).
 
 ## 1. Download (and unzipping)
 
@@ -13,10 +15,10 @@ First of all, you will need to download the folder which contains all of the fil
 ![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Download.jpg?raw=true)<br><br>
 Place the ZIP file in the folder of your choice, unzip it (for example with [7-Zip](https://www.7-zip.org/download.html)).<br>
 
-## 2. Installation
+## 2. Installation steps (for Windows users):
 ### 2.1. Python
 
-To make the tool work, you will need a specific version of Python. Download the 3.10.11 Python version [here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install `Windows installer (64-bit)` (64-bit is recommended but if your computer is on a 32-bit OS you should download the 32-bit version).<br><br>
+To make the tool work, you will need Python version 3.10.11. Download the [3.10.11 Python version here](https://www.python.org/downloads/release/python-31011/). Go down until the 'Files' section and install `Windows installer (64-bit)` (64-bit is recommended but if your computer is on a 32-bit OS you should download the 32-bit version).<br><br>
 ![alt_python](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Python.jpg?raw=true)<br><br>
 Then, execute the .exe file you just downloaded.
 
@@ -26,23 +28,26 @@ During the installation, make sure to check the box "Add python.exe to PATH" and
 
 ### 2.2. LWTools
 
-Once you have installed Python, open your command prompt to install the tool. To open the command prompt, press the keys Windows + R, then type "cmd" and press Enter. In your command prompt, put the following command :
+Once you have installed Python, open your command prompt to install the tool. (To open the command prompt, press the keys Windows + R, then type "cmd" and press Enter.) In your command prompt, put the following command :
 
 ```bash
 pip install LWTools
 ```
+this command will automatically install the latest version of our LWTools library from the [pypi website](https://pypi.org/project/LWTools/).
 
 ## 3. Launch Jupyter Lab
 
-Each time you want to launch the tool, you will need to launch Jupyter Lab first. To launch Jupyter Lab, you will have to open you command prompt (if it is not already open) and use the following command :
+Each time you want to use the tool, you will have to launch Jupyter Lab first. 
 
+To launch Jupyter Lab, open a command prompt and write (or copy-paste):
 ```bash
 jupyter lab
 ```
+This will open a Jupyter Lab tab in your favorite web browser. (! Warning ! if you close the command prompt it will also close the Jupyter Lab session).
 
-## 4. Launch the tool
+## 4. Launching the LWTools notebook
 
-Once Jupyter Lab is launched, find the folder you downloaded from Github during the first step and open the file '...\LMT_Widget_Tool-LWT-main\scripts\LMT_Widget_Tool-LWT-main\scripts'
+Once Jupyter Lab is launched, go to the folder you downloaded from Github during the step <b>1. Download (and unzipping)<\b> and open the <b>scripts<\b> folder (e.g. '...\LMT_Widget_Tool-LWT-main\scripts').
 
 ## **! WARNING !**
 
@@ -50,7 +55,8 @@ Before using the tool, make sure to restart the kernel to clear it :<br><br>
 ![alt_restart_kernel](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/Restart_kernel.jpg?raw=true)<br><br>
 Sometimes you will need to restart the kernel when it seems that the tool crashed, but don’t do it when it’s running !
 
-Here you can enjoy the tool ! <br><br>
+Then, you can enjoy the tool, by opening the <b>LMT_Widget_Tool.ipynb<\b> and running it within Jupyter Lab! (If so far, you never used a jupyter lab before, we recommend trying [that tutorial[(https://jupyter.org/try-jupyter/lab/?path=notebooks%2FIntro.ipynb)).
+<br><br>
 
 ## Order for analysis<br>
 
