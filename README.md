@@ -96,6 +96,10 @@ Here are few ideas of future developments:<br>
   - Graphs of distance
   - exporting all graphs and stats at once
 
+## Funding
+
+This project has been possible thanks fundings obtained by A. François (IGF, CNRS, Montpellier, France): [Affective Touch Lab](https://www.igf.cnrs.fr/index.php/fr/h-teams-fr/ht-francois-fr).
+
 ## Another Cool LMT Tool
 
 If you do not know it yet, please have a look to Nicolas Torquet's own [LMT_toolkit_analysis](https://github.com/ntorquet/lmt_toolkit_analysis)! It is really a powerful way to extract and visualize data from your .sqlite directly. <br>
