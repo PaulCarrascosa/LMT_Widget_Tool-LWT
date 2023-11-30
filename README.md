@@ -98,7 +98,7 @@ Here are few ideas of future developments:<br>
 
 ## Funding
 
-This project has been possible thanks fundings obtained by A. François (IGF, CNRS, Montpellier, France): [Affective Touch Lab](https://www.igf.cnrs.fr/index.php/fr/h-teams-fr/ht-francois-fr).
+This project has been possible thanks to fundings obtained by A. François (IGF, CNRS, Montpellier, France): [Affective Touch Lab](https://www.igf.cnrs.fr/index.php/fr/h-teams-fr/ht-francois-fr).
 
 ## Another Cool LMT Tool
 
