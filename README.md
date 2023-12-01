@@ -9,8 +9,8 @@ In our tool, we used the [LMT-Analysis](https://github.com/fdechaumont/lmt-analy
 
 If you have any questions or comments, feel free to contact us, Damien (damien.huzard@igf.cnrs.fr) or Paul (paul.carrascosa@igf.cnrs.fr).
 
-## The Video Tutorial:
-[![Watch the video]](https://youtu.be/JdHjRV_WiZ0?si=aDXVUr696PyLIxlh)
+## The Video Tutorial for easy Installation and first use of the Widget:
+[![Watch the video](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/vignette.png?raw=true)](https://youtu.be/JdHjRV_WiZ0?si=aDXVUr696PyLIxlh)
 
 ## 1. Download (and unzipping)
 
