@@ -1,3 +1,5 @@
+![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/LWTtools-logo-v1.png?raw=true)<br><br>
+
 # LMT Widget Tool (LWT)
 
 The LMT Widget Tool is as tool designed to facilitate the extraction and analysis of behavioral data from .sqlite databases from the Live Mouse Tracker (LMT).
