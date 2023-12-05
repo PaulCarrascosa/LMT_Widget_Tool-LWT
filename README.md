@@ -1,4 +1,4 @@
-![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/LWTtools-logo-v1.png?raw=true)<br><br>
+![alt_download](https://github.com/PaulCarrascosa/LMT_Widget_Tool-LWT/blob/main/media/images/LWTools-logo2.png?raw=true)<br><br>
 
 # LMT Widget Tool (LWT)
 
