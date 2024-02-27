@@ -27,7 +27,7 @@ except Exception:
     long_description=''
 
 
-setup(name='LWTools',version='1.0.3',author='Paul Carrascosa, Damien Huzard',
+setup(name='LWTools',version='1.1.0',author='Paul Carrascosa, Damien Huzard',
     author_email='paul.carrascosa@igf.cnrs.fr',
     description='Tool for LMT data analysis',
     long_description=long_description,
