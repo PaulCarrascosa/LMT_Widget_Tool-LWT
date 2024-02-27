@@ -11,87 +11,90 @@ import shutil
 import tkinter as tk
 from tkinter.dialog import Dialog
 from tkinter import filedialog
-from tkinter.filedialog import askdirectory
-
+from tkinter.filedialog import askdirectory, askopenfilename
 
 def window():
     root = tk.Tk()
     root.withdraw()
     root.update()
 
-    d = Dialog(title="Select folder for processing", text="Select folder for processing", bitmap='question',
-        strings=('Folder', 'Cancel'), default=0)
+    # Utilisez Dialog() pour afficher une boîte de dialogue de sélection
+    d = Dialog(
+        title="Select folder or cancel",
+        text="Select folder or cancel",
+        bitmap='question',
+        strings=('Folder', 'Cancel'),
+        default=0
+    )
 
-    root.focus_force()
-    folder = None
-    if (d.num == 0):
-        folder = askdirectory(title="Choose a folder where your .csv files to merge are located")
+    # Si l'utilisateur choisit 'Cancel', terminez la fonction
+    if d.num == 1:
+        root.destroy()
+        return None
 
-    d.destroy()
+    folder = askdirectory(title="Choose a folder where your .csv files to merge are located")
     root.destroy()
-
     return folder
 
 def Merge():
     """
-    Cette fonction permet de fusionner tous les fichiers CSV d'un dossier sélectionné en un seul fichier CSV.
+    This function merges all CSV files in a selected folder into a single CSV file.
 
-    Instructions :
-    1. Une boîte de dialogue s'ouvre pour sélectionner un dossier contenant les fichiers CSV.
-    2. Vous devez spécifier le nom du nouveau dossier à créer où les fichiers seront déplacés.
-    3. Les fichiers CSV du dossier sélectionné seront déplacés vers le nouveau dossier.
-    4. Tous les fichiers CSV du nouveau dossier seront fusionnés en un seul fichier CSV.
-    5. Le nouveau fichier fusionné sera enregistré dans le nouveau dossier avec un nom spécifié.
+    Instructions:
+    1. A dialog box opens to select a folder containing CSV files.
+    2. Specify the name of the new folder to create where the files will be moved.
+    3. CSV files from the selected folder will be moved to the new folder.
+    4. All CSV files in the new folder will be merged into a single CSV file.
+    5. The new merged file will be saved in the new folder with a specified name.
 
-    Note :
-    - Assurez-vous d'avoir les modules os, shutil, glob et pandas importés.
-    - Si vous avez une colonne "Unnamed: 0" dans vos fichiers CSV, utilisez la ligne `df_append.pop("Unnamed: 0")`
-      pour la supprimer avant de fusionner les fichiers.
-    - Assurez-vous que votre code appelle la fonction window() pour afficher la boîte de dialogue de sélection
-      du dossier.
+    Note:
+    - Ensure that the os, shutil, glob, and pandas modules are imported.
+    - If you have a column "Unnamed: 0" in your CSV files, use the line `df_append.pop("Unnamed: 0")`
+      to remove it before merging the files.
+    - Make sure your code calls the window() function to display the folder selection dialog.
 
-    Exemple d'utilisation :
+    Example Usage:
     Merge()
     """
 
-    # # Ouvrir une boîte de dialogue pour sélectionner un dossier
+    # Open a dialog box to select a folder
     path = window()
 
-    # spécifier le nom du nouveau dossier à créer
-    input_new_file = input("Put the name of your folder that will be created :")
-    new_folder = input_new_file
+    # Specify the name of the new folder to create
+    input_new_folder = input("Enter the name of the new folder to create: ")
+    new_folder = input_new_folder
 
-    # spécifier le chemin du dossier où les fichiers .csv se trouvent
+    # Specify the path of the folder where the .csv files are located
     root = path
 
-    # spécifier le chemin du dossier où le nouveau dossier sera créé
+    # Specify the path of the folder where the new folder will be created
     final_file = path
 
-    # vérifier si le dossier existe déjà
+    # Check if the folder already exists
     if os.path.exists(os.path.join(final_file, new_folder)):
-        # si oui, le supprimer
-        os.rmdir(os.path.join(final_file, new_folder))
+        # If yes, remove it
+        shutil.rmtree(os.path.join(final_file, new_folder))
 
-    # créer le nouveau dossier dans le dossier de destination
+    # Create the new folder in the destination folder
     new_path = os.path.join(final_file, new_folder)
     os.makedirs(new_path)
 
-    # parcourir tous les fichiers dans le dossier initial
+    # Iterate through all files in the initial folder
     for file in os.listdir(root):
 
-        # vérifier si le fichier est un fichier .csv
+        # Check if the file is a .csv file
         if file.endswith(".csv"):
 
-            # spécifier le chemin complet du fichier
+            # Specify the full path of the file
             path2 = os.path.join(root, file)
 
-            # déplacer le fichier vers le nouveau dossier
+            # Move the file to the new folder
             shutil.move(path2, new_path)
 
-    #read the path
+    # read the path
     file_path = path+"/"+new_folder+"/"
     os.chdir(path+"/"+new_folder+"/")
-    #list all the files from the directory
+    # list all the files from the directory
     file_list = os.listdir(file_path)
 
     #list all csv files only

@@ -3,6 +3,7 @@ sys.path.insert(1, "../")
 
 import sqlite3
 import os
+from tqdm import tqdm
 from time import *
 import datetime
 import matplotlib.pyplot as plt
@@ -36,6 +37,11 @@ from lmtanalysis.EventTimeLineCache import flushEventTimeLineCache, \
 # --------------------------------------------------------------------------------------------------------
 # Start of rebuild
 # --------------------------------------------------------------------------------------------------------
+
+# Select databases to rebuild and create csv
+files = getFilesToProcess()
+
+count = 0
 
 ''' minT and maxT to process the analysis (in frame) '''
 minT = 0
@@ -115,13 +121,10 @@ def flushNightEvents(connection):
 
 def flushEvents( connection ):
 
-    # print("Flushing events...")
-
     for ev in eventClassList:
 
         chrono = Chronometer( "Flushing event " + str(ev) )
         ev.flush( connection );
-        # chrono.printTimeInS()
 
 def processTimeWindow(connection, file, currentMinT, currentMaxT):
     CheckWrongAnimal.check(connection, tmin=currentMinT, tmax=currentMaxT)
@@ -136,35 +139,26 @@ def processTimeWindow(connection, file, currentMinT, currentMaxT):
     flushEventTimeLineCache()
 
     if (USE_CACHE_LOAD_DETECTION_CACHE):
-        # print("Caching load of animal detection...")
         animalPool = AnimalPool()
         animalPool.loadAnimals(connection)
         animalPool.loadDetection(start=currentMinT, end=currentMaxT)
-        # print("Caching load of animal detection done.")
 
     for ev in eventClassList:
         chrono = Chronometer(str(ev))
         ev.reBuildEvent(connection, file, tmin=currentMinT, tmax=currentMaxT, pool=animalPool)
-        # chrono.printTimeInS()
 
 def process(file):
-    # print("\n***************************************************************************")
-    # print("Start Process of Events")
-    # print(file)
 
     mem = virtual_memory()
     availableMemoryGB = mem.total / 1000000000
-    # print("Total memory on computer: (GB)", availableMemoryGB)
 
     if availableMemoryGB < 10:
-        # print("Not enough memory to use cache load of events.")
         disableEventTimeLineCache()
 
     chronoFullFile = Chronometer("File " + file)
 
     connection = sqlite3.connect(file)
 
-    # update missing fields
     try:
         connection = sqlite3.connect(file)
         c = connection.cursor()
@@ -172,54 +166,36 @@ def process(file):
         c.execute(query)
         connection.commit()
 
-    except:
-        print("METADATA field already exists", file)
+    except Exception as e:
+        pass
 
     BuildDataBaseIndex.buildDataBaseIndex(connection, force=False)
     # build sensor data
     animalPool = AnimalPool()
     animalPool.loadAnimals(connection)
-    # animalPool.buildSensorData(file)
 
     currentT = minT
-
     try:
-
         flushEvents(connection)
-
         while currentT < maxT:
-
             currentMinT = currentT
             currentMaxT = currentT + windowT
             if (currentMaxT > maxT):
                 currentMaxT = maxT
-
             chronoTimeWindowFile = Chronometer(
                 "File " + file + " currentMinT: " + str(currentMinT) + " currentMaxT: " + str(currentMaxT));
             processTimeWindow(connection, file, currentMinT, currentMaxT)
             # chronoTimeWindowFile.printTimeInS()
-
             currentT += windowT
-
-        # print("Full file process time: ")
-        # chronoFullFile.printTimeInS()
 
         TEST_WINDOWING_COMPUTATION = False
 
         if (TEST_WINDOWING_COMPUTATION):
-
-            # print("*************")
-            # print("************* TEST START SECTION")
-            # print("************* Test if results are the same with or without the windowing.")
-
             # display and record to a file all events found, checking with rolling idA from None to 4. Save nbEvent and total len
-
             eventTimeLineList = []
-
             eventList = getAllEvents(connection)
             file = open("outEvent" + str(windowT) + ".txt", "w")
             file.write("Event name\nnb event\ntotal duration")
-
             for eventName in eventList:
                 for animal in range(0, 5):
                     idA = animal
@@ -229,13 +205,7 @@ def process(file):
                     eventTimeLineList.append(timeLine)
                     file.write(timeLine.eventNameWithId + "\t" + str(len(timeLine.eventList)) + "\t" + str(
                         timeLine.getTotalLength()) + "\n")
-
             file.close()
-
-            # plotMultipleTimeLine(eventTimeLineList)
-
-            # print("************* END TEST")
-
         flushEventTimeLineCache()
 
     except:
@@ -248,8 +218,6 @@ def process(file):
         t.addLog(error)
         flushEventTimeLineCache()
 
-        # print(error, file=sys.stderr)
-
         raise FileProcessException()
 
 def insertNightEventWithInputs(file, startNightInput, endNightInput):
@@ -257,50 +225,23 @@ def insertNightEventWithInputs(file, startNightInput, endNightInput):
     This function create night event
     '''
 
-    # print("Global variables:")
-    # print(startNightInput, endNightInput)
-
     connection = sqlite3.connect(file)
 
-    # print("--------------")
-    # print("Current file: ", file)
-    #
-    # print("--------------")
-    # print("Loading existing Night events...")
     nightTimeLine = EventTimeLine(connection, "night", None, None, None, None)
 
-    # print("\n")
-    # print("The Night Event list is:")
-    # print("--------------")
-    # for event in nightTimeLine.eventList:
-    #     print(event)
-    # print("--------------")
-    #
-    print("\n")
-    # print("Flushing the night events...")
     flushNightEvents(connection)
 
     nightTimeLineFlushed = EventTimeLine(connection, "night", None, None, None, None)
 
-
-    # print("The Night Event list, After Flushing:")
-    # print("--------------")
-    for event in nightTimeLineFlushed.eventList:
-        print(event)
-    # print("--------------")
-
-    print("\n")
     try:
         startNight = datetime.time(int(startNightInput.split(":")[0]), int(startNightInput.split(":")[1]),
                                    int(startNightInput.split(":")[2]))
-        # print(startNight)
     except ValueError:
         raise ValueError("Incorrect time format, should be hh:mm:ss")
 
     try:
         endNight = datetime.time(int(endNightInput.split(":")[0]), int(endNightInput.split(":")[1]),
                                  int(endNightInput.split(":")[2]))
-        # print(endNight)
     except ValueError:
         raise ValueError("Incorrect time format, should be hh:mm:ss")
 
@@ -310,23 +251,17 @@ def insertNightEventWithInputs(file, startNightInput, endNightInput):
     - end night hour > start night hour means the night is during the day: reverse cycle
     """
 
-    # print("**** Test End/start times****")
     if (endNight < startNight):
         cycle = "normal"
-        # print("The cycle is ", cycle)
     else:
         cycle = "reverse"
-        # print("The cycle is ", cycle)
 
-    # print("\n")
     currentNight = Night(startHour=startNight, endHour=endNight, cycle=cycle)
 
     '''Beginning and end of the experiment'''
     startExperimentDate = getStartInDatetime(file)
-    # print(f"start Xp date: {startExperimentDate}")
 
     endExperimentDate = getEndInDatetime(file)
-    # print(f"End Xp date: {endExperimentDate}")
 
     currentDay = datetime.datetime.strftime(startExperimentDate, "%Y-%m-%d")
     currentDay = datetime.datetime(int(currentDay.split("-")[0]), int(currentDay.split("-")[1]),
@@ -334,11 +269,7 @@ def insertNightEventWithInputs(file, startNightInput, endNightInput):
     previousDay = currentDay - datetime.timedelta(days=1)
     previousDay = datetime.datetime.strftime(previousDay, "%Y-%m-%d")
 
-    # print(f"currentDay : {currentDay}")
-    # print(f"previousDay : {previousDay}")
-
     currentStartNightDate = datetime.datetime.strptime("%s %s" % (previousDay, startNight), "%Y-%m-%d %H:%M:%S")
-    # print(f"currentStartNightDate : {currentStartNightDate}")
 
     lastFrame = getNumberOfFrames(file)
 
@@ -357,8 +288,6 @@ def insertNightEventWithInputs(file, startNightInput, endNightInput):
                 tmpEndFrame = lastFrame
                 nightTimeLineFlushed.addEvent(Event(tmpStartFrame, tmpEndFrame))
                 nightTimeLineFlushed.endRebuildEventTimeLine(connection, deleteExistingEvent=True)
-                # print("** nightTimeLineFlushed is now:")
-                # print(nightTimeLineFlushed)
             else:
                 '''night outside the experiment'''
                 pass
@@ -371,13 +300,28 @@ def insertNightEventWithInputs(file, startNightInput, endNightInput):
 
             nightTimeLineFlushed.addEvent(Event(tmpStartFrame, tmpEndFrame))
             nightTimeLineFlushed.endRebuildEventTimeLine(connection, deleteExistingEvent=True)
-            # print("*** nightTimeLineFlushed is now:")
-            # print(nightTimeLineFlushed)
 
         '''next day'''
-        # print("\n")
-        # print("Going to the next day: ")
         currentNight.nextDay()
+
+def NightInputs():
+    print("Construction of night events")
+    night = input("Do you want to rebuild the night ? Yes (Y) or No (N) :")
+    startNightInput = input("Time of the beginning of the night (hh:mm:ss):")
+    endNightInput = input("Time of the end of the night (hh:mm:ss):")
+
+    return night, startNightInput, endNightInput
+
+def CreateNights(file, night, startNightInput, endNightInput):
+    if (night == "Y") or (night == "Yes") or (night == "Ye") or (night == "Da") or (night == "Oui") or (night == "Si"):
+        print(f"Code launched for file {file}")
+        connection = sqlite3.connect(file)
+        flushNightEvents(connection)
+        insertNightEventWithInputs(file, startNightInput, endNightInput)
+        print("*** NIGHTS CREATED ***")
+    else:
+        print("THE NIGHTS WILL NOT BE BUILD !!!!")
+
 # --------------------------------------------------------------------------------------------------------
 # End of rebuild
 # --------------------------------------------------------------------------------------------------------
@@ -444,81 +388,43 @@ def computeBehaviorsData(behavior, show=False):
 
     return returnedBehaviors
 
-def rebuild(file, files, buildEvents, night, startNightInput, endNightInput):
+def RebuildInputs():
 
-    # global night
-    # global buildEvents
-    global confirmEvents
-    # global startNightInput
-    # global endNightInput
+    # Questions for the rebuild of the databases
+    buildEvents = input("Do you want to rebuild the Events ?")
+    # Questions for the creation of the csv files
+    timeBinsDuration = int(input("Enter the TIMEBIN for ALL the files (1min =  1800 frames / 1h = 108000 frames): "))
+    useNights = input("Do you want to use the Nights from the .sqlite files to computes the data ? ('Yes'/'No'): ")
+
+    return buildEvents, timeBinsDuration, useNights
+
+def Rebuild(file, files, buildEvents):
+
     global timeBinsDuration
     global useNights
 
-    print("Code launched.")
-
-    # files = getFilesToProcess()
-
-    # buildEvents = input("Do you want to rebuild the Events ?")
-    # confirmEvents = input("Do you confirm ? ")
-    # night = input("Do you want to rebuild the night ? Yes (Y) or No (N) :")
-    # startNightInput = input("Time of the beginning of the night (hh:mm:ss):")
-    # endNightInput = input("Time of the end of the night (hh:mm:ss):")
-    # timeBinsDuration = int(input("Enter the TIMEBIN for ALL the files (1min =  1800 frames / 1h = 108000 frames): "))
-    # useNights = input("Do you want to use the Nights from the .sqlite files to computes the data ? ('Yes'/'No'): ")
-
+    print("Processing file, please wait...")
 
     chronoFullBatch = Chronometer("Full batch")
 
     fileCount = 0  # File Counter
-    # if files is not None:
     if files != None:
-        # for file in files:
         if fileCount == 0:  # First file
             try:
                 fileCount += 1  # Increment file Counter
-                # print("\n")
-
-                if buildEvents == "Yes" or buildEvents == "yes" or buildEvents == 'Y' or buildEvents == "y":
-                    print("In addition to the night events, this script will also Rebuild the database for those "
-                          "events:")
-
-                    for i in eventClassList:
-                        print(i.__name__)
-
-                else:
-                    print("The Events WILL NOT BE BUILD !!!!")
-
-                if (night == "Y") or (night == "Yes"):  # User replied Yes to rebuild the Nights
-                    # print("Processing file, Rebuilding the  nights...", file)
-                    insertNightEventWithInputs(file, startNightInput, endNightInput)
-                else:
-                    print("THE NIGHTS WILL NOT BE BUILD !!!!")
-
                 if buildEvents == "Yes" or buildEvents == 'Y' or buildEvents == "yes":
                     process(file)
-
             except FileProcessException:
                 print("STOP PROCESSING FILE " + file, file=sys.stderr)
-
         else:  # For other files than the first one
             try:
-                # print("Processing file", file)
-                insertNightEventWithInputs(file, startNightInput, endNightInput)
                 process(file)
             except FileProcessException:
                 print("STOP PROCESSING FILE " + file, file=sys.stderr)
 
-    # chronoFullBatch.printTimeInS()
-
-    print("*** ALL JOBS DONE ***")
-
 def Export(count:int, file, files, timeBinsDuration, useNights):
 
-    # global files
-
     filenames = [os.path.basename(files[x]) for x in range(0, len(files))]
-    # print(filenames)
-    # print(f"{files} => {filenames}")
 
     ### DEFINE CONSTANTS ###
     start = {}
@@ -527,36 +433,19 @@ def Export(count:int, file, files, timeBinsDuration, useNights):
     # Create a Global Dataframe with all data:
     dfGlobal = pd.DataFrame()
 
-    # print(f"The current Count is : {count}")
-    # print(f"file: {file}")
-    # print(f"File path: {file.title()}")
     fileName = filenames[count]
-    # print(f"File name: {fileName}")
 
     # Check that 'filename' and the current file are the same
     # TODO CAN BE IMPROVED by extracting from the current file
-
-    if fileName in file:
-        print("THE FILE NAME MATCHES! !")
-    else:
-        print("!!! ERROR: FILE NAME DO NOT MATCH!!")
 
     connection = sqlite3.connect(file)  # connect to database
     animalPool = AnimalPool()  # create an animalPool, which basically contains your animals
     animalPool.loadAnimals(connection)  # load infos about the animals
 
     animalNumber = animalPool.getNbAnimals()
-    # print(f"There are {animalNumber} animals,")
 
     if useNights.lower() == "yes" or useNights.lower() == "y":
-        # Le problème vient d'ici (fonction getNightStartStop) ? Est-ce que ça ne prendrait pas juste la première
-        # nuit ? Faire une boucle if qui dit que si night_phase > 1 alors on prendra, à chaque night_count,
-        # les données des frames suivantes comme getNightStartStop ne prend que le startframe et le endframe de
-        # l'évènement night ?
         NightFrames = animalPool.getNightStartStop()
-        # print("The night events are:")
-        # print(NightFrames)
-        # print(NightFrames[0])
 
         # TODO find number of night and create bins for each
 
@@ -566,30 +455,15 @@ def Export(count:int, file, files, timeBinsDuration, useNights):
         stopFrame = NightFrames[0][1]
 
         nbTimebin.append(int((stopFrame - startFrame) / timeBinsDuration) + 1)
-        # print("There are " + str(nbTimebin) + " timebins.")
-
-        # print(startFrame)
-        # print(stopFrame)
-
-        # for night in NightFrames:
-        #     print(night)
-
-        # for night in NightFrames:
-        #     print(night)
-        #     print(night[0])
-        #     print(night[1])
 
         nbTimebins = int((stopFrame - startFrame) / timeBinsDuration) + 1
-
-        # print(f"There are {nbTimebins} timebins of {timeBinsDuration} frames (= {timeBinsDuration / 30 / 60} "
-        #       f"minutes) during the night (between frames {startFrame} and {stopFrame}.)")
 
         for filename in filenames:
             start[filename] = startFrame
             stop[filename] = stopFrame
 
     if useNights.lower() == "no" or useNights.lower() == "no":
-        print("AAAAaaaahhh")
+        print("You should use the nights")
 
     # TODO Flush ALL the events !!
 
@@ -651,27 +525,13 @@ def Export(count:int, file, files, timeBinsDuration, useNights):
 
     # TODO one for loop on Nights and One for loop for the times bins inside the night
     night_count = 1
-    # print(NightFrames)
     for night in NightFrames:
-        # print("The night is ", night)
-        # print("The night_ count is ", night_count)
         bin = 1
-        # Je pense que le problème vient du fait que toutes les valeurs sont en rapport avec le premier start bin
-        # du fichier, donc au lieu de passer au jour suivant, ça va recommencer par rapport au premier start
-        # bin...Le problème doit aussi venir de "dicoOfBehInfos" vu que ce sont les valeurs de Night-Phase qui
-        # sont utilisées
-        for z in range(night[0], night[1], timeBinsDuration):
-            # print("Z is ", z)
-            startBin = (start[fileName] + (bin - 1) * timeBinsDuration) + (night_count - 1) * (108000 * 24)
+        bin_progress = tqdm(range(1, nbTimebins + 1), desc=f"Night {night_count} - Bins", position=0, leave=True)
+        for z in bin_progress:
+            startBin = (start[fileName] + (z - 1) * timeBinsDuration) + (night_count - 1) * (108000 * 24)
             stopBin = startBin + timeBinsDuration
-            # print(bin)
-            # for bin in range(nbTimebins):
-
-            print(f"************* Loading data for bin #{bin} *************")
-            # now = datetime.datetime.now()
-            # print("Current date and time : ")
-            # print(now.strftime("%Y-%m-%d %H:%M:%S"))
-            # print(f"*** Start frame = {startBin} // Stop frame = {stopBin} ***")
+            bin_progress.set_postfix(Bin=f"{bin}/{nbTimebins}")
             animalPool.loadDetection(start=startBin, end=stopBin)  # load the detection for the different bins
 
             # Update the dictionary with Start; Stop; and bin info:
@@ -684,32 +544,16 @@ def Export(count:int, file, files, timeBinsDuration, useNights):
             # Example file name "191104_Magel2_Cage4_LMT3_4mo - Copy.sqlite"
             dicoOfBehInfos["Filename"] = fileName[:-7]  # Remove the " - Copy.sqlite" part
             date, Xp, cage, Injection = fileName[:-7].split("_")  # Splits the name at '_'
-            # print(f"{date} , {Xp}, {cage}, {Injection}")
             dicoOfBehInfos["Date"] = date
             dicoOfBehInfos["Cage"] = cage
             dicoOfBehInfos["Injection"] = Injection
 
-            # print("****** General parameters of the animals ****** ")
-            # for animal in animalPool.getAnimalList():
-                # print("**")
-                # print(f"Animal RFID: {animal.RFID} / Animal Id: {animal.baseId} / Animal name: {animal.name}")
-                # print(f"Animal genotype: {animal.genotype}")
-                # nbOfDetectionFrames = len(animal.detectionDictionnary.keys()) timeInSecond =
-                # nbOfDetectionFrames / 30  # 30 fps print("Detection time: ", timeInSecond, "seconds.") print(
-                # "Distance traveled in arena (cm): ", animal.getDistance(tmin=start, tmax=stop))  # distance
-                # traveled
-
             #### For 1+ ANIMAL ####
             if animalNumber >= 1:
                 for behavior in behavioralEventsForOneAnimal:
-                    # print("**** ", behavior, " ****")
-                    # behavioralList1 = []
-
                     for a in animalPool.getAnimalDictionnary():
                         if behavior == "Distance":
-                            # print("DISTANCE COMPUTE !!!!!!!!!!")
                             dist_temp = animalPool.getAnimalWithId(a).getDistance(startBin, stopBin)
-                            # print(dist_temp)
                             dicoOfBehInfos.update({"name": "Distance", "totalLength": dist_temp,
                                                    "RFidA": animalPool.getAnimalWithId(a).RFID,
                                                    "GenoA": animalPool.getAnimalWithId(a).genotype,
@@ -764,8 +608,6 @@ def Export(count:int, file, files, timeBinsDuration, useNights):
             #### FOR 3+ ANIMALS ####
             if animalNumber >= 3:
                 for behavior in behavioralEventsForThreeAnimals:
-                    # print("**** ", behavior, " ****")
-
                     for a in animalPool.getAnimalDictionnary():
                         # There is ONLY ONE animal making or braking a group of 3 or 4 mice
                         if behavior == "Group 3 make" or behavior == "Group 3 break":
@@ -799,8 +641,6 @@ def Export(count:int, file, files, timeBinsDuration, useNights):
             #### FOR 4 ANIMALS ####
             if animalNumber >= 4:
                 for behavior in behavioralEventsForFourAnimals:
-                    # print("**** ", behavior, " ****")
-
                     for a in animalPool.getAnimalDictionnary():
                         # There is ONLY ONE animal making or braking a group of 3 or 4 mice
                         if behavior == "Group 4 make" or behavior == "Group 4 break":
@@ -844,20 +684,10 @@ def Export(count:int, file, files, timeBinsDuration, useNights):
         night_count += 1
     # count += 1  # TODO REPLACE THIS COUNT BY A FOR LOOP ON FILES
 
-    # dfGlobal = dfGlobal.append(dfOfBehInfos)  # Add the data to the global Dataframe
-
     dfOfBehInfos.to_csv(f"{fileName}.csv")  # Export the current dataframe into a .csv
     print(f"{fileName}.csv File Created !")
-    print("##################################################################################")
-    print("##################################################################################")
     print("######################## Close Connection with Database ##########################")
     connection.close()
-
-    # dfGlobal.to_csv(f"{fileGlobal}.csv")  # Export the Global dataframe into a .csv
-    # print(f"{fileGlobal}.csv File Created !")
-
-    # Say it's done !
-    # print("!!! End of analysis !!!")
 
 # --------------------------------------------------------------------------------------------------------
 # End of export
@@ -870,10 +700,6 @@ def Export(count:int, file, files, timeBinsDuration, useNights):
 # # Questions for the rebuild of the databases
 #
 # buildEvents = input("Do you want to rebuild the Events ?")
-# confirmEvents = input("Do you confirm ? ")
-# night = input("Do you want to rebuild the night ? Yes (Y) or No (N) :")
-# startNightInput = input("Time of the beginning of the night (hh:mm:ss):")
-# endNightInput = input("Time of the end of the night (hh:mm:ss):")
 #
 # # Questions for the creation of the csv files
 #

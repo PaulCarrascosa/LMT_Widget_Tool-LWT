@@ -20,7 +20,7 @@ import numpy as np
 import pandas as pd
 import datetime
 import os
-
+from tqdm import tqdm
 from lmtanalysis.Animal import AnimalPool
 from lmtanalysis.Event import EventTimeLine, plotMultipleTimeLine
 from lmtanalysis.FileUtil import getFilesToProcess
@@ -137,7 +137,7 @@ def Export():
         # print(f"file: {file}")
         # print(f"File path: {file.title()}")
         fileName = filenames[count]
-        # print(f"File name: {fileName}")
+        print(f"File name: {fileName}")
 
         #Check that 'filename' and the current file are the same
         #TODO CAN BE IMPROVED by extracting from the current file
@@ -262,18 +262,24 @@ def Export():
             # print("The night is ", night)
             # print("The night_ count is ", night_count)
             bin = 1
-            # Je pense que le problème vient du fait que toutes les valeurs sont en rapport avec le premier start bin
-            # du fichier, donc au lieu de passer au jour suivant, ça va recommencer par rapport au premier start
-            # bin...Le problème doit aussi venir de "dicoOfBehInfos" vu que ce sont les valeurs de Night-Phase qui
-            # sont utilisées
-            for z in range(night[0], night[1], timeBinsDuration):
+            bin_progress = tqdm(range(1, nbTimebins + 1), desc=f"Night {night_count} - Bins", position=0, leave=True)
+            for z in bin_progress:
                 # print("Z is ", z)
-                startBin = (start[fileName] + (bin-1) * timeBinsDuration) + (night_count-1) * (108000*24)
+                startBin = (start[fileName] + (z-1) * timeBinsDuration) + (night_count-1) * (108000*24)
                 stopBin = startBin + timeBinsDuration
+                bin_progress.set_postfix(Bin=f"{bin}/{nbTimebins}")
+        # for night in NightFrames:
+        #     # print("The night is ", night)
+        #     # print("The night_ count is ", night_count)
+        #     bin = 1
+        #     for z in range(night[0], night[1], timeBinsDuration):
+        #         # print("Z is ", z)
+        #         startBin = (start[fileName] + (bin-1) * timeBinsDuration) + (night_count-1) * (108000*24)
+        #         stopBin = startBin + timeBinsDuration
                 # print(bin)
             # for bin in range(nbTimebins):
 
-                print(f"************* Loading data for bin #{bin} *************")
+                # print(f"************* Loading data for bin #{bin} *************")
                 # now = datetime.datetime.now()
                 # print("Current date and time : ")
                 # print(now.strftime("%Y-%m-%d %H:%M:%S"))
@@ -451,8 +457,8 @@ def Export():
 
         dfOfBehInfos.to_csv(f"{fileName}.csv") # Export the current dataframe into a .csv
         print(f"{fileName}.csv File Created !")
-        print("##################################################################################")
-        print("##################################################################################")
+        # print("##################################################################################")
+        # print("##################################################################################")
         print("######################## Close Connection with Database ##########################")
     connection.close()
 
