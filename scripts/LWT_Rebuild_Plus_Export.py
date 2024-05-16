@@ -555,6 +555,7 @@ def Export(count:int, file, files, timeBinsDuration, useNights):
                         if behavior == "Distance":
                             dist_temp = animalPool.getAnimalWithId(a).getDistance(startBin, stopBin)
                             dicoOfBehInfos.update({"name": "Distance", "totalLength": dist_temp,
+                                                   "numberOfEvents": dist_temp,
                                                    "RFidA": animalPool.getAnimalWithId(a).RFID,
                                                    "GenoA": animalPool.getAnimalWithId(a).genotype,
                                                    "idA": a})

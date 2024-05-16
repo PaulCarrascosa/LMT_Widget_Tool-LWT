@@ -111,7 +111,8 @@ def Merge():
     print("##################################################################################")
     print("######################### Folder created & files moved ###########################")
 
-    df_append.pop("Unnamed: 0") #Add this line if there is a column named "Unnamed: 0"
+    # df_append.pop("Unnamed: 0") #Add this line if there is a column named "Unnamed: 0"
+    df_append.rename(columns={'Unnamed: 0': ''}, inplace=True)
     name_new_file = input("What's the name of your merged file ?")
     df_append.to_csv(path+"/"+new_folder+"/"+name_new_file+".csv")
 

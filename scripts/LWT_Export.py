@@ -323,6 +323,7 @@ def Export():
                                 dist_temp = animalPool.getAnimalWithId(a).getDistance(startBin, stopBin)
                                 # print(dist_temp)
                                 dicoOfBehInfos.update({"name": "Distance", "totalLength": dist_temp,
+                                                       "numberOfEvents": dist_temp,
                                                        "RFidA": animalPool.getAnimalWithId(a).RFID,
                                                        "GenoA": animalPool.getAnimalWithId(a).genotype,
                                                        "idA": a})
@@ -468,5 +469,5 @@ def Export():
     # Say it's done !
     print("!!! End of analysis !!!")
 
-# if __name__ == '__main__':
-#     Export()
+if __name__ == '__main__':
+    Export()

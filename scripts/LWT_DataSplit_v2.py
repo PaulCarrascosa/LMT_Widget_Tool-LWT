@@ -133,7 +133,7 @@ def processFiles(files, save_folder):
 
             if existing_index is None:
                 new_cursor.execute(
-                    "CREATE INDEX 'detectionFastLoadXYIndex' ON DETECTION (ANIMALID, FRAMENUMBER ASC, MASS_X, MASS_Y)")
+                    "CREATE INDEX 'detectionFastLoadXYIndex' ON 'DETECTION' ('ANIMALID', 'FRAMENUMBER' ASC, 'MASS_X', 'MASS_Y')")
 
             new_cursor.execute("SELECT name FROM sqlite_master WHERE type='index' AND name='detectionIndex'")
             existing_index = new_cursor.fetchone()
@@ -161,14 +161,14 @@ def processFiles(files, save_folder):
             new_cursor.execute("SELECT name FROM sqlite_master WHERE type='index' AND name='animalINDEX'")
             existing_index = new_cursor.fetchone()
             if existing_index is None:
-                new_cursor.execute("CREATE INDEX animalINDEX ON ANIMAL (ID)")
+                new_cursor.execute("CREATE INDEX 'animalIndex' ON 'ANIMAL' ('ID')")
 
             cursor.execute("SELECT * FROM EVENT WHERE ENDFRAME BETWEEN ? AND ?", (start_frame, end_frame))
 
             event_rows = cursor.fetchall()
 
-            stmt4 = "INSERT INTO EVENT VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-            new_cursor.executemany(stmt4, event_rows)
+            stmt5 = "INSERT INTO EVENT VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            new_cursor.executemany(stmt5, event_rows)
 
             new_cursor.execute("SELECT name FROM sqlite_master WHERE type='index' AND name='eventEndFrameIndex'")
             existing_index = new_cursor.fetchone()
@@ -178,22 +178,22 @@ def processFiles(files, save_folder):
             new_cursor.execute("SELECT name FROM sqlite_master WHERE type='index' AND name='eventIndex'")
             existing_index = new_cursor.fetchone()
             if existing_index is None:
-                new_cursor.execute("CREATE INDEX 'eventIndex' ON 'EVENT' ('ENDFRAME' ASC)")
+                new_cursor.execute("CREATE INDEX 'eventIndex' ON 'EVENT' ('ID' ASC,'STARTFRAME' ASC, 'ENDFRAME' ASC)")
 
             new_cursor.execute("SELECT name FROM sqlite_master WHERE type='index' AND name='eventStartFrameIndex'")
             existing_index = new_cursor.fetchone()
             if existing_index is None:
-                new_cursor.execute("CREATE INDEX 'eventStartFrameIndex' ON 'EVENT' ('ENDFRAME' ASC)")
+                new_cursor.execute("CREATE INDEX 'eventStartFrameIndex' ON 'EVENT' ('STARTFRAME' ASC)")
 
             new_cursor.execute("SELECT name FROM sqlite_master WHERE type='index' AND name='eventstartendIndex'")
             existing_index = new_cursor.fetchone()
             if existing_index is None:
-                new_cursor.execute("CREATE INDEX 'eventstartendIndex' ON 'EVENT' ('ENDFRAME' ASC)")
+                new_cursor.execute("CREATE INDEX 'eventstartendIndex' ON 'EVENT' ('STARTFRAME' ASC, 'ENDFRAME' ASC)")
 
             new_cursor.execute("SELECT name FROM sqlite_master WHERE type='index' AND name='indexeventidIndex'")
             existing_index = new_cursor.fetchone()
             if existing_index is None:
-                new_cursor.execute("CREATE INDEX 'indexeventidIndex' ON 'EVENT' ('ENDFRAME' ASC)")
+                new_cursor.execute("CREATE INDEX 'indexeventidIndex' ON 'EVENT' ('ID' ASC)")
 
             new_connection.commit()
             new_cursor.close()
