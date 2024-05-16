@@ -27,6 +27,12 @@ from lmtanalysis.Measure import *
 from lmtanalysis.Chronometer import Chronometer
 from lmtanalysis.FileUtil import getFilesToProcess
 
+# Save outputs
+original_stdout = sys.stdout
+
+# Redirect all prints in txt file
+sys.stdout = open('output.txt', 'w')
+
 def loadDetectionMap(connection, animal, start=None, end=None):
     
         chrono = Chronometer("Correct detection integrity: Load detection map")
@@ -58,10 +64,12 @@ def loadDetectionMap(connection, animal, start=None, end=None):
 
 
 def correct(connection, tmin=None, tmax=None):
+
+    global maxID
     
-    pool = AnimalPool( )
-    pool.loadAnimals( connection )
-    #pool.loadDetection( start = tmin, end = tmax )
+    pool = AnimalPool()
+    pool.loadAnimals(connection)
+    #pool.loadDetection(start = tmin, end = tmax)
 
     cursor = connection.cursor()
 
@@ -114,15 +122,17 @@ def correct(connection, tmin=None, tmax=None):
     
     #cursor = connection.cursor()
 
+    global countCorrection
+
     countCorrection = 0
 
     for idAnimal in detectionTimeLine.keys():
-        for t in range ( tmin , tmax +1 ):
-            if ( t in detectionTimeLine[idAnimal] ):
-                if not ( t in validDetectionTimeLineDictionnary ):
-                    query = "UPDATE `DETECTION` SET `ANIMALID`=NULL WHERE `FRAMENUMBER`='{}';".format( t )
-                    cursor.execute( query )
-                    # print ( f"{countCorrection}: {query}" )
+        for t in range(tmin, tmax + 1):
+            if (t in detectionTimeLine[idAnimal]):
+                if not (t in validDetectionTimeLineDictionnary):
+                    query = "UPDATE `DETECTION` SET `ANIMALID`=NULL WHERE `FRAMENUMBER`='{}';".format(t)
+                    cursor.execute(query)
+                    # print (f"{countCorrection}: {query}")
                     countCorrection += 1
     
     connection.commit()
@@ -138,20 +148,23 @@ def correct(connection, tmin=None, tmax=None):
     t = TaskLogger(connection)
     t.addLog("Correct detection integrity", tmin=tmin, tmax=tmax)
 
-       
-    # print( "Rebuild event finished." )
+    # print("Rebuild event finished.")
 
+    return countCorrection
 
 if __name__ == '__main__':
     files = getFilesToProcess()
 
     for file in files:
-        # print("Processing file", file)
+        print("Processing file", file)
         connection = sqlite3.connect(file)  # connect to database
         animalPool = AnimalPool()  # create an animalPool, which basically contains your animals
         animalPool.loadAnimals(connection)  # load infos about the animals
 
-        correct(connection)
+        countCorrection = correct(connection)  # Correction du fichier
+
+        print(f" =>  THERE WERE {countCorrection} CORRECTIONS IN THE DATABASE")
+        print(f" This represents approximately {countCorrection / maxID * 100}% of Alteration of the database")
 
         connection.close()
 
