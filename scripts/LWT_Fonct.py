@@ -290,7 +290,7 @@ def get_data_stats(recup_data):
     if not os.path.exists(results_directory):
         os.makedirs(results_directory)
     # Create the full path to the 'result_df.csv' file in the 'results' folder
-    result_df.to_csv(os.path.join(results_directory, 'result_df.csv'), index=False)
+    pivot_df_test.to_csv(os.path.join(results_directory, 'result_df.csv'), index=False)
 
 recup_data.on_click(get_data_stats)
 
@@ -751,7 +751,7 @@ def results_update_dropdown(date, cage, event, night_phase, range_slide_plot):
         else :
             return
 
-def update_stats(date, genos, cage, night_phase, event, choice_type, range_slide_stats):
+def update_stats(date, genos, cage, event, choice_type, night_phase, range_slide_stats):
     '''
     This function will return a figure with 3 plots:
     . The first with the dabest package that will compare the selected data (eg. NaCl/Amphet)
@@ -759,74 +759,49 @@ def update_stats(date, genos, cage, night_phase, event, choice_type, range_slide
     . The third that is the summary of the statsmodels.stats.descriptivestats.describe() function
     '''
     global pivot_df2
+    global pivot_df_test
     global merged_df
     global selected_genos
     global temp_df_loop1
     global image_file_path
     clear_output()
-    new_column_names = []
     dfs = []
     ids = [i for i in df.GenoA.unique()]
     min_value_stats, max_value_stats = range_slide_stats
-
     if choicetype.value == 'Number of events':
-        # temp_df_loop1 = df[(df["GenoA"].isin(list(genos.value)))]
         for date_val, genos_val, cage_val, night_phase_val in itertools.product(date, genos, cage, night_phase):
-            # display(Markdown(f"""<h3>L'analyse est réalisée sur {animalnumber.value[0]} souris, l'injection
-            # choisie est '{date_val}',
-            # il s'agit de la {cage_val} pour l'évènement '{drop_event.value}'
-            # de nuit !</h3>"""))
             temp_df_loop1 = df[(df["Injection"] == date_val)
                                & (df["GenoA"] == genos_val)
                                & (df["Cage"] == cage_val)
                                & (df["name"] == drop_event.value)
                                & (df["Night-Phase"] == night_phase_val)]
-            # Créer un nouveau dataframe avec toutes les colonnes de l'ancien dataframe
-            df_new = temp_df_loop1.copy()
-            # df_new = df_new[df_new['GenoA'].isin(selected_genos)]
-            # Ajouter une colonne avec la somme des numberOfEvents de chaque RFidA de chaque Bin
-            df_new['new_numbersOfEvents'] = df_new.groupby(['Bin', 'RFidA'])['numberOfEvents'].transform('sum')
             # Supprimer les lignes utilisées pour faire la somme
-            df_new = df_new.drop_duplicates(subset=['Bin', 'RFidA'],
-                                            keep='last')
-            df_new = df_new[(df_new['Bin'] >= min_value_stats) & (df_new['Bin'] <= max_value_stats)]
-            # fig, ax1 = plt.subplots(figsize=(10,4))
-            # ax2 = fig.add_axes([1, 0.25, 0.25, 0.5])
-            # sns.barplot(data=df_new, y='new_numbersOfEvents', x="GenoA", palette={'Amphet':'red', 'NaCl':'blue'}, ax=ax2)
-            # ax2.set_title("A barplot")
-            # plt.show()
-            dfs.append(df_new)
+            dfs.append(temp_df_loop1)
 
         if not dfs:
             return
 
         else:
-            merged_df = pd.concat(dfs)
-            merged_df['new_cage'] = merged_df['Cage'].str.extract('(\d+)').astype(int)
-            global df_lm
+            temp_df_loop1 = pd.concat(dfs)
+            temp_df_loop1['new_cage'] = temp_df_loop1['Cage'].str.extract('(\d+)').astype(int)
             global result_df
             global two_groups_paired_baseline
             global column_index
-            df_lm = merged_df.copy()
-            df_lm = merged_df.groupby(['new_cage', 'RFidA', 'GenoA', 'Date'])['new_numbersOfEvents'].sum().reset_index()
+            df_lm = temp_df_loop1.groupby(['new_cage', 'RFidA', 'Date', 'Injection', 'GenoA'])['numberOfEvents'].sum().reset_index()
+
+            pivot_df = df_lm.pivot_table(index=['new_cage', 'RFidA'], columns='Injection',
+                                         values='numberOfEvents', fill_value=0).reset_index()
+
+            pivot_df.insert(0, 'Index', range(len(pivot_df)))
 
             # Compute Linear Mixed Models stats
-
             if drop_stat.value == "Linear Mixed Model":
-                ssdd = statsmodels.stats.descriptivestats.describe(df_lm,
-                                                                   stats=['mean', 'std_err', 'std', 'median'])
-                model = smf.mixedlm("new_numbersOfEvents ~ GenoA",
+                ssdd = statsmodels.stats.descriptivestats.describe(df_lm, stats=['mean', 'std_err', 'std', 'median'])
+                # ssdd = sm.stats.DescrStatsW(df_lm['numberOfEvents'])
+                model = smf.mixedlm("numberOfEvents ~ GenoA",
                                     df_lm,
                                     groups='new_cage')  # Creates the model
                 result = model.fit()  # Run model
-
-                # df_lm['Dates'] = df_lm.groupby('RFidA')['Date'].transform(lambda x: ', '.join(x.astype(str)))
-                # Utilisez groupby et cumcount pour attribuer des valeurs "1", "2" ou "3" en fonction de l'ordre des dates pour chaque RFidA
-                # df_lm['New_Column'] = df_lm.groupby('RFidA').cumcount() + 1
-                # df_lm['New_Column'] = df_lm['New_Column'].astype(str)
-                df_lm = df_lm.sort_values(by=['RFidA', 'new_cage', 'Date']).reset_index(drop=True)
-
-                new_df = df_lm.loc[:, ['new_cage', 'RFidA']]
 
                 # Récupérez les valeurs de sélections dans le widget
                 name_selections = list(drop_injection_stat.value)
@@ -836,60 +811,14 @@ def update_stats(date, genos, cage, night_phase, event, choice_type, range_slide
                 # Ajoutez une colonne 'Injection' au DataFrame
                 df_lm['Injection'] = [name_selections[i % num_select] for i in range(len(df_lm))]
 
-                # Créez un dictionnaire pour stocker les données pivotées
-                pivot_data = {'new_cage': [], 'RFidA': []}
-                for injection in name_selections:
-                    pivot_data[injection] = []
-
-                # Parcourez les lignes du premier DataFrame
-                for _, row in df_lm.iterrows():
-                    liste_newcage = row['new_cage']
-                    liste_RFidA = row['RFidA']
-                    liste_injection = row['Injection']
-                    liste_nbevents = row['new_numbersOfEvents']
-
-                    # Vérifiez si la valeur de 'Injection' est dans la liste sélectionnée
-                    if liste_injection in name_selections:
-                        pivot_data['new_cage'].append(liste_newcage)
-                        pivot_data['RFidA'].append(liste_RFidA)
-                        for selected_injection in name_selections:
-                            if selected_injection == liste_injection:
-                                pivot_data[selected_injection].append(liste_nbevents)
-                            else:
-                                pivot_data[selected_injection].append(None)
-
-                # Créez un DataFrame à partir du dictionnaire pivoté
-                pivot_df = pd.DataFrame(pivot_data)
-
-                # Fusionnez df2 avec le DataFrame pivoté
-                result_df = pd.merge(new_df, pivot_df, on=['new_cage', 'RFidA'], how='left')
-
-                # Groupez le résultat par 'new_cage' et 'RFidA' et agrégez les valeurs
-                result_df = result_df.groupby(['new_cage', 'RFidA'])[name_selections].first().reset_index()
-
-                # Replace values NaN by 'None'
-                result_df = result_df.fillna('0')
-                result_df.reset_index(drop=True, inplace=True)
-                result_df.insert(0, 'Index', range(len(result_df)))
-
-                # Reinitialize the index of the 2nd df
-                new_df = new_df.reset_index(drop=True)
-
-                # Convert all columns except 'Index', 'new_cage' and 'RFidA' in int64
-                result_df[result_df.columns.difference(['Index', 'new_cage', 'RFidA'])] = result_df[
-                    result_df.columns.difference(['Index', 'new_cage', 'RFidA'])].astype('int64')
-                result_df
-                # pivot_df2 = df_lm.pivot(index=['RFidA', 'new_cage'],
-                #                         columns='Date',
-                #                         values='new_numbersOfEvents').reset_index()
-                pivot_df2 = df_lm.pivot(index=['RFidA', 'new_cage'],
-                                        columns='Injection',
-                                        values='new_numbersOfEvents').reset_index()
-                pivot_df2.sort_values('new_cage',
-                                      inplace=True)
+                # Pivot the DataFrame
+                pivot_df_test = df_lm.pivot_table(index=['new_cage', 'RFidA'], columns='Injection', values='numberOfEvents',
+                                             fill_value=0).reset_index()
+                # Add an Index column
+                pivot_df_test.insert(0, 'Index', range(len(pivot_df_test)))
 
                 # Initializing for dabest
-                two_groups_paired_baseline = dabest.load(data=result_df,
+                two_groups_paired_baseline = dabest.load(data=pivot_df_test,
                                                          idx=list(drop_injection_stat.value),
                                                          id_col="Index",
                                                          paired='baseline')
@@ -901,7 +830,7 @@ def update_stats(date, genos, cage, night_phase, event, choice_type, range_slide
                 # 1er plot
                 plotdabest = dabest.load(data=df_lm,
                                          x="GenoA",
-                                         y="new_numbersOfEvents",
+                                         y="numberOfEvents",
                                          idx=list(genos),
                                          id_col="new_cage")
 
@@ -916,14 +845,14 @@ def update_stats(date, genos, cage, night_phase, event, choice_type, range_slide
                     ax1 = two_groups_paired_baseline.mean_diff.plot(color_col='new_cage',
                                                                     ax=axs[1])
                     axs[1].legend(title='Cage',
-                                  labels=result_df['new_cage'].unique(),
+                                  labels=pivot_df_test['new_cage'].unique(),
                                   frameon=False,
                                   loc=(1.62, 0.75))
                 elif len(drop_injection_stat.value) > 2:
                     ax1 = two_groups_paired_baseline.mean_diff.plot(color_col='new_cage',
                                                                     ax=axs[1])
                     axs[1].legend(title='Cage',
-                                  labels=result_df['new_cage'].unique(),
+                                  labels=pivot_df_test['new_cage'].unique(),
                                   frameon=False,
                                   loc=(0.95, 0.75))
 
@@ -956,49 +885,39 @@ def update_stats(date, genos, cage, night_phase, event, choice_type, range_slide
                                 va='top',
                                 family='monospace')
 
-                df_lm = df_lm.rename(columns={'new_cage': 'Cage', 'new_numbersOfEvents': 'NumberOfEvents'})
-
     elif choicetype.value == 'Event duration':
         for date_val, genos_val, cage_val, night_phase_val in itertools.product(date, genos, cage, night_phase):
-            # display(Markdown(f"""<h3>L'analyse est réalisée sur {animalnumber.value[0]} souris, l'injection
-            # choisie est '{date_val}',
-            # il s'agit de la {cage_val} pour l'évènement '{drop_event.value}'
-            # de nuit !</h3>"""))
             temp_df_loop1 = df[(df["Injection"] == date_val)
                                & (df["GenoA"] == genos_val)
                                & (df["Cage"] == cage_val)
                                & (df["name"] == drop_event.value)
                                & (df["Night-Phase"] == night_phase_val)]
-            # Créer un nouveau dataframe avec toutes les colonnes de l'ancien dataframe
-            df_new = temp_df_loop1.copy()
-            # Ajouter une colonne avec la somme des numberOfEvents de chaque RFidA de chaque Bin
-            df_new['new_totallength'] = df_new.groupby(['Bin', 'RFidA'])['totalLength'].transform('sum')
             # Supprimer les lignes utilisées pour faire la somme
-            df_new = df_new.drop_duplicates(subset=['Bin', 'RFidA'],
-                                            keep='last')
-            df_new = df_new[(df_new['Bin'] >= min_value_stats) & (df_new['Bin'] <= max_value_stats)]
-            dfs.append(df_new)
+            dfs.append(temp_df_loop1)
 
         if not dfs:
             return
 
         else:
-            merged_df = pd.concat(dfs)
-            merged_df['new_cage'] = merged_df['Cage'].str.extract('(\d+)').astype(int)
-            df_lm = merged_df.copy()
-            df_lm = merged_df.groupby(['new_cage', 'RFidA', 'GenoA', 'Date'])['new_totallength'].sum().reset_index()
+            temp_df_loop1 = pd.concat(dfs)
+            temp_df_loop1['new_cage'] = temp_df_loop1['Cage'].str.extract('(\d+)').astype(int)
+            global result_df
+            global column_index
+            df_lm = temp_df_loop1.groupby(['new_cage', 'RFidA', 'Date', 'Injection', 'GenoA'])['totalLength'].sum().reset_index()
 
+            pivot_df = df_lm.pivot_table(index=['new_cage', 'RFidA'], columns='Injection',
+                                         values='totalLength', fill_value=0).reset_index()
+
+            pivot_df.insert(0, 'Index', range(len(pivot_df)))
+
+            # Compute Linear Mixed Models stats
             if drop_stat.value == "Linear Mixed Model":
-                ssdd = statsmodels.stats.descriptivestats.describe(df_lm,
-                                                                   stats=['mean', 'std_err', 'std', 'median'])
-                model = smf.mixedlm("new_totallength ~ GenoA",
+                ssdd = statsmodels.stats.descriptivestats.describe(df_lm, stats=['mean', 'std_err', 'std', 'median'])
+                # ssdd = sm.stats.DescrStatsW(df_lm['numberOfEvents'])
+                model = smf.mixedlm("totalLength ~ GenoA",
                                     df_lm,
                                     groups='new_cage')  # Creates the model
                 result = model.fit()  # Run model
-
-                df_lm = df_lm.sort_values(by=['RFidA', 'new_cage', 'Date']).reset_index(drop=True)
-
-                new_df = df_lm.loc[:, ['new_cage', 'RFidA']]
 
                 # Récupérez les valeurs de sélections dans le widget
                 name_selections = list(drop_injection_stat.value)
@@ -1008,56 +927,14 @@ def update_stats(date, genos, cage, night_phase, event, choice_type, range_slide
                 # Ajoutez une colonne 'Injection' au DataFrame
                 df_lm['Injection'] = [name_selections[i % num_select] for i in range(len(df_lm))]
 
-                # Créez un dictionnaire pour stocker les données pivotées
-                pivot_data = {'new_cage': [], 'RFidA': []}
-                for injection in name_selections:
-                    pivot_data[injection] = []
+                # Pivot the DataFrame
+                pivot_df_test = df_lm.pivot_table(index=['new_cage', 'RFidA'], columns='Injection', values='totalLength',
+                                             fill_value=0).reset_index()
+                # Add an Index column
+                pivot_df_test.insert(0, 'Index', range(len(pivot_df_test)))
 
-                # Parcourez les lignes du premier DataFrame
-                for _, row in df_lm.iterrows():
-                    liste_newcage = row['new_cage']
-                    liste_RFidA = row['RFidA']
-                    liste_injection = row['Injection']
-                    liste_nbevents = row['new_totallength']
-
-                    # Vérifiez si la valeur de 'Injection' est dans la liste sélectionnée
-                    if liste_injection in name_selections:
-                        pivot_data['new_cage'].append(liste_newcage)
-                        pivot_data['RFidA'].append(liste_RFidA)
-                        for selected_injection in name_selections:
-                            if selected_injection == liste_injection:
-                                pivot_data[selected_injection].append(liste_nbevents)
-                            else:
-                                pivot_data[selected_injection].append(None)
-
-                # Créez un DataFrame à partir du dictionnaire pivoté
-                pivot_df = pd.DataFrame(pivot_data)
-
-                # Fusionnez df2 avec le DataFrame pivoté
-                result_df = pd.merge(new_df, pivot_df, on=['new_cage', 'RFidA'], how='left')
-
-                # Groupez le résultat par 'new_cage' et 'RFidA' et agrégez les valeurs
-                result_df = result_df.groupby(['new_cage', 'RFidA'])[name_selections].first().reset_index()
-
-                # Remplacez les valeurs NaN par 'None'
-                result_df = result_df.fillna('0')
-                result_df.reset_index(drop=True, inplace=True)
-                result_df.insert(0, 'Index', range(len(result_df)))
-
-                # Réinitialisez l'index du deuxième DataFrame
-                new_df = new_df.reset_index(drop=True)
-
-                # Convertir toutes les colonnes sauf 'Index', 'new_cage', et 'RFidA' en int64
-                result_df[result_df.columns.difference(['Index', 'new_cage', 'RFidA'])] = result_df[
-                    result_df.columns.difference(['Index', 'new_cage', 'RFidA'])].astype('int64')
-                result_df
-                pivot_df2 = df_lm.pivot(index=['RFidA', 'new_cage'],
-                                        columns='Date',
-                                        values='new_totallength').reset_index()
-                pivot_df2.sort_values('new_cage',
-                                      inplace=True)
-
-                two_groups_paired_baseline = dabest.load(data=result_df,
+                # Initializing for dabest
+                two_groups_paired_baseline = dabest.load(data=pivot_df_test,
                                                          idx=list(drop_injection_stat.value),
                                                          id_col="Index",
                                                          paired='baseline')
@@ -1069,7 +946,7 @@ def update_stats(date, genos, cage, night_phase, event, choice_type, range_slide
                 # 1er plot
                 plotdabest = dabest.load(data=df_lm,
                                          x="GenoA",
-                                         y="new_totallength",
+                                         y="totalLength",
                                          idx=list(genos),
                                          id_col="new_cage")
 
@@ -1084,14 +961,14 @@ def update_stats(date, genos, cage, night_phase, event, choice_type, range_slide
                     ax1 = two_groups_paired_baseline.mean_diff.plot(color_col='new_cage',
                                                                     ax=axs[1])
                     axs[1].legend(title='Cage',
-                                  labels=result_df['new_cage'].unique(),
+                                  labels=pivot_df_test['new_cage'].unique(),
                                   frameon=False,
                                   loc=(1.62, 0.75))
                 elif len(drop_injection_stat.value) > 2:
                     ax1 = two_groups_paired_baseline.mean_diff.plot(color_col='new_cage',
                                                                     ax=axs[1])
                     axs[1].legend(title='Cage',
-                                  labels=result_df['new_cage'].unique(),
+                                  labels=pivot_df_test['new_cage'].unique(),
                                   frameon=False,
                                   loc=(0.95, 0.75))
 
@@ -1124,9 +1001,7 @@ def update_stats(date, genos, cage, night_phase, event, choice_type, range_slide
                                 va='top',
                                 family='monospace')
 
-                df_lm = df_lm.rename(columns={'new_cage': 'Cage', 'new_totallength': 'Totallength'})
-
-    return df_lm, result_df
+    return df_lm, pivot_df_test
 
 def results_update_stats(date, genos, cage, night_phase, event, choice_type, range_slide_stats):
     '''
