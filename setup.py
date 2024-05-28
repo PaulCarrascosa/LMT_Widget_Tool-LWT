@@ -27,7 +27,7 @@ except Exception:
     long_description=''
 
 
-setup(name='LWTools',version='1.1.0',author='Paul Carrascosa, Damien Huzard',
+setup(name='LWTools',version='1.1.4',author='Paul Carrascosa, Damien Huzard',
     author_email='paul.carrascosa@igf.cnrs.fr',
     description='Tool for LMT data analysis',
     long_description=long_description,
@@ -48,9 +48,10 @@ setup(name='LWTools',version='1.1.0',author='Paul Carrascosa, Damien Huzard',
     python_requires='>=3.10',
     install_requires=[
         'setuptools>=61.0',
+        'tqdm==4.65.0',
     	'matplotlib==3.5.2',
     	'lxml==4.9.1',
-    	'pandas==1.4.3',
+    	'pandas==1.5.0',
     	'affine==2.3.1',
     	'networkx==2.8.5',
     	'seaborn==0.11.2',
@@ -59,5 +60,8 @@ setup(name='LWTools',version='1.1.0',author='Paul Carrascosa, Damien Huzard',
     	'tabulate==0.8.10',
     	'ipywidgets==8.0.3',
     	'jupyterlab==3.5.0',
+        'scipy==1.9.3',
+        'numpy==1.22.3',
+        
     ]   
 )
