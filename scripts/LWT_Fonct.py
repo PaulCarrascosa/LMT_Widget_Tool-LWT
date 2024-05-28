@@ -593,7 +593,7 @@ def update_analysis(date, cage, event, range_slide_plot, animalnumber):
                     plt.show()
                 else:
                     print("Aucune donnée correspondante trouvée.")
-    else :
+    else:
         if choicetype.value == 'Number of events':
             for date_val, cage_val in itertools.product(date, cage):
                 temp_df_loop_try = df[(df["Injection"] == date_val) & (df["Cage"] == cage_val) & (df["name"] == drop_event.value) & (df['Bin'] >= min_value_plot) & (df['Bin'] <= max_value_plot)]
@@ -666,6 +666,7 @@ def results_update_dropdown(date, cage, event, night_phase, range_slide_plot):
                     <br>Phase = {night_phase_val} </h3>"""))
                 temp_df_loop0 = df[(df["Injection"] == date_val)
                                    & (df["Cage"] == cage_val)
+                                   # & (df['Bin'] >= min_value_plot) & (df['Bin'] <= max_value_plot)
                                    & (df["name"] == r_drop_event_plot)
                                    & (df["Night-Phase"] == night_phase_val)]
                 # Créer un nouveau dataframe avec toutes les colonnes de l'ancien dataframe
@@ -801,7 +802,7 @@ def update_stats(date, genos, cage, event, choice_type, night_phase, range_slide
                 df_lm['Injection'] = [name_selections[i % num_select] for i in range(len(df_lm))]
 
                 # Pivot the DataFrame
-                pivot_df_test = df_lm.pivot_table(index=['new_cage', 'RFidA'], columns='Injection', values='numberOfEvents',
+                pivot_df_test = df_lm.pivot_table(index=['new_cage', 'RFidA', 'GenoA'], columns='Injection', values='numberOfEvents',
                                              fill_value=0).reset_index()
                 # Add an Index column
                 pivot_df_test.insert(0, 'Index', range(len(pivot_df_test)))
@@ -917,7 +918,7 @@ def update_stats(date, genos, cage, event, choice_type, night_phase, range_slide
                 df_lm['Injection'] = [name_selections[i % num_select] for i in range(len(df_lm))]
 
                 # Pivot the DataFrame
-                pivot_df_test = df_lm.pivot_table(index=['new_cage', 'RFidA'], columns='Injection', values='totalLength',
+                pivot_df_test = df_lm.pivot_table(index=['new_cage', 'RFidA', 'GenoA'], columns='Injection', values='totalLength',
                                              fill_value=0).reset_index()
                 # Add an Index column
                 pivot_df_test.insert(0, 'Index', range(len(pivot_df_test)))
